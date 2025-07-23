@@ -1,23 +1,27 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import PanToolIcon from '@mui/icons-material/PanTool';
+import VaccinesIcon from '@mui/icons-material/Vaccines';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 
 const Home = () => (
   <div className='bg-[#FF6B6B] px-60'>
 
-    <div className="py-40 flex w-full h-screen gap-12">
+    <div className="py-40 flex w-full h-screen gap-12 justify-between">
       
       {/* Text Section */}
-      <div className="bg-white flex-1 flex flex-col items-center text-center justify-center gap-8">
-          <div>An AI Powered Health App</div>
-          <div>Revolutionizing Healthcare: Comprehensive, Rapid AI Diagnostic App for Accurate Multi-Disease Detection, Prevention with Mental Health Support chatbot.</div>
-          <Button className="w-1/2"> Diagnose Now </Button>
+      <div className="flex-1 flex flex-col items-center text-center justify-center gap-8">
+          <div className='text-gray-50'>An AI Powered Health App</div>
+          <div className='text-gray-50 text-xs ml-auto'>Revolutionizing Healthcare: Comprehensive, Rapid AI Diagnostic App for Accurate Multi-Disease Detection, Prevention with Mental Health Support chatbot.</div>
+          <Button className="w-1/2 bg-red-700"> Diagnose Now </Button>
       </div>
 
       {/* Image Section */}
-      <div className='bg-white flex-1 flex items-center justify-center p-4'>
+      <div className='flex-1 flex items-center justify-center p-4 rounded-lg shadow-lg bg-red-300'>
         <img
-          className=""
-          src="/your-image-path.png" // Replace with actual path or import
+          className="rounded-lg"
+          src="https://as1.ftcdn.net/v2/jpg/02/68/84/80/1000_F_268848009_j3m4yVKfh3MDdFLynVa8b9G2u7LN0ilZ.jpg" // Replace with actual path or import
           alt="Health app blocks"
         />
       </div>
@@ -29,27 +33,11 @@ const Home = () => (
     </div>
 
     {/* Features Section */}
-    <div className='p-20 flex items-center justify-center gap-8'>
-      <img
-          src="/your-image-path.png" // Replace with actual path or import
-          alt="Health app blocks"
-          className=""
-        />
-        <img
-          src="/your-image-path.png" // Replace with actual path or import
-          alt="Health app blocks"
-          className=""
-        />
-        <img
-          src="/your-image-path.png" // Replace with actual path or import
-          alt="Health app blocks"
-          className=""
-        />
-        <img
-          src="/your-image-path.png" // Replace with actual path or import
-          alt="Health app blocks"
-          className=""
-        />
+    <div className='py-20 flex items-center justify-evenly gap-8'>
+      <div className='flex flex-col bg-gray-100 p-10 rounded-lg justify-evenly items-center'>Precaution<PanToolIcon fontSize='large' ></PanToolIcon></div>
+      <div className='flex flex-col bg-gray-100 p-10 rounded-lg justify-evenly items-center'>Remedies<VaccinesIcon fontSize='large' ></VaccinesIcon></div>
+      <div className='flex flex-col bg-gray-100 p-10 rounded-lg justify-evenly items-center'>Exercise<DirectionsRunIcon fontSize='large'></DirectionsRunIcon></div>
+      <div className='flex flex-col bg-gray-100 p-10 rounded-lg justify-evenly items-center'>Diet<RestaurantMenuIcon fontSize='large'></RestaurantMenuIcon></div>
     </div>
   </div>
 );

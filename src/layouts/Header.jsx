@@ -3,14 +3,14 @@ import React from 'react'
 
 function Header() {
   return (
-    <div className='flex justify-between m-5'>
+    <div className='flex justify-between m-5 text-sm'>
       {/* Header Left */}
       <div>
         Logo
       </div>
 
       {/* Header Center  */}
-      <div className='flex space-x-4'>
+      <div className='flex justify-center align-item-l space-x-5 text-sm'>
         <div>Home</div>
         <div>Predictor</div> 
         <div>About</div> 
@@ -18,8 +18,8 @@ function Header() {
 
       {/* Header Right */}
       <div className='flex space-x-4'>
-        <Button>Log In</Button>
-        <Button>Sign Up</Button>
+        <Button className='bg-red-700 text-sm hover:bg-[#FF6B6B] hover:text-gray-200'>Log In</Button>
+        <Button className='text-sm hover:bg-stone-700 hover:text-gray-200'>Sign Up</Button>
       </div>
     </div>
   )
