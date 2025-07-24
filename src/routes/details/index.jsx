@@ -1,10 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Input } from "@/components/ui/input"
+import { getGeminiResponse } from '@/services/AIModel';
+import { AI_PROMPT } from '@/constants/prompt';
 
 
 const Details = () => {
   const { userId } = useParams();
+
+  const geminiResponse = getGeminiResponse(AI_PROMPT);
+
   return (
     <div className="max-w-2xl mx-auto p-6 space-y-8">
       <section>
