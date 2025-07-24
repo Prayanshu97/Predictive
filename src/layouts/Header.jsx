@@ -3,14 +3,14 @@ import React from 'react'
 
 function Header() {
   return (
-    <div className='flex justify-between m-5 text-sm'>
+    <div className='flex justify-between m-5 text-sm items-center'>
       {/* Header Left */}
       <div>
         Logo
       </div>
 
       {/* Header Center  */}
-      <div className='flex justify-center align-item-l space-x-5 text-sm'>
+      <div className='flex justify-center space-x-5'>
         <div>Home</div>
         <div>Predictor</div> 
         <div>About</div> 
