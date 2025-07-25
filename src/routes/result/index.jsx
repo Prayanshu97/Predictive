@@ -1,68 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-const dummyReport = {
-  "predictedDisease": [
-    {
-      "name": "Viral Fever",
-      "probability": "70%",
-      "severity": "Mild"
-    },
-    {
-      "name": "Common Cold",
-      "probability": "20%",
-      "severity": "Mild"
-    },
-    {
-      "name": "Sinusitis (due to dust allergy trigger)",
-      "probability": "10%",
-      "severity": "Mild"
-    }
-  ],
-  "personalizedGuidance": [
-    "Monitor your temperature regularly.",
-    "Rest adequately to aid recovery.",
-    "Stay well-hydrated by drinking plenty of fluids.",
-    "Avoid exposure to dust, given your allergy."
-  ],
-  "preventionStrategies": [
-    "Maintain good hand hygiene (frequent washing).",
-    "Avoid close contact with sick individuals.",
-    "Ensure your living environment is clean and dust-free.",
-    "Consider a flu shot seasonally if recommended by your physician."
-  ],
-  "recommendedExercise": [
-    "Given your current symptoms, avoid strenuous exercise.",
-    "Light activities like short walks can be resumed once fever subsides and you feel better.",
-    "Focus on rest during this period."
-  ],
-  "nutritionGuidance": [
-    "Consume easily digestible, nutrient-rich vegetarian foods.",
-    "Include fruits and vegetables high in Vitamin C (e.g., oranges, bell peppers).",
-    "Ensure adequate protein intake for recovery (e.g., lentils, tofu).",
-    "Avoid spicy or oily foods that might irritate your system."
-  ],
-  "precautionaryMeasures": [
-    "If symptoms worsen or persist beyond 3-4 days, consult a general physician.",
-    "Watch out for new symptoms like difficulty breathing, severe body aches, or persistent high fever.",
-    "Avoid self-medication without professional advice."
-  ],
-  "homeRemedies": [
-    "For fever: Lukewarm sponge bath, drink warm fluids like herbal tea.",
-    "For headache: Rest in a quiet, dark room, apply a cold compress to the forehead.",
-    "Gargle with warm salt water if any throat irritation develops (though not currently present)."
-  ],
-  "summaryReport": "Ajay, 31, Male. Current symptoms: Slight fever, headache (mild, 2 days). Predicted diseases: Viral Fever (70%), Common Cold (20%), Sinusitis (10%)."
-}
-
+import { db } from '@/services/firebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
 
 const Result = () => {
   const { userId, reportId } = useParams();
+  const [report, setReport] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchReport = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const reportDoc = await getDoc(doc(db, 'diagnosisReports', reportId));
+        if (!reportDoc.exists()) throw new Error('Report not found');
+        setReport(reportDoc.data());
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchReport();
+  }, [reportId]);
+
+  if (loading) return <div className="max-w-2xl mx-auto p-6">Loading report...</div>;
+  if (error) return <div className="max-w-2xl mx-auto p-6 text-red-600">{error}</div>;
+  if (!report || !report.geminiResponse) return <div className="max-w-2xl mx-auto p-6">No report data available.</div>;
+
+  const gemini = report.geminiResponse;
+
   return (
     <div className="max-w-2xl mx-auto p-6 space-y-8">
       <h1 className="text-2xl font-bold mb-4">Health Report</h1>
       <p className="text-base text-muted-foreground mb-6">Report ID: {reportId} | User ID: {userId}</p>
-
 
       {/* 1. Predicted Diseases */}
       <section>
@@ -77,11 +50,11 @@ const Result = () => {
               </tr>
             </thead>
             <tbody>
-              {dummyReport.predictedDisease.map((d, idx) => (
+              {(gemini.predictedDisease || []).map((d, idx) => (
                 <tr key={idx} className="text-center">
-                  <td className="px-3 py-2 border">{d.name}</td>
-                  <td className="px-3 py-2 border">{d.probability}</td>
-                  <td className="px-3 py-2 border">{d.severity}</td>
+                  <td className="px-3 py-2 border">{d.name || d}</td>
+                  <td className="px-3 py-2 border">{d.probability || ''}</td>
+                  <td className="px-3 py-2 border">{d.severity || ''}</td>
                 </tr>
               ))}
             </tbody>
@@ -93,7 +66,7 @@ const Result = () => {
       <section>
         <h2 className="text-lg font-semibold mb-2">Personalized Guidance</h2>
         <ul className="list-disc pl-6 mb-4">
-          {dummyReport.personalizedGuidance.map((item, idx) => (
+          {(gemini.personalizedGuidance || []).map((item, idx) => (
             <li key={idx}>{item}</li>
           ))}
         </ul>
@@ -103,7 +76,7 @@ const Result = () => {
       <section>
         <h2 className="text-lg font-semibold mb-2">Prevention Strategies</h2>
         <ul className="list-disc pl-6 mb-4">
-          {dummyReport.preventionStrategies.map((item, idx) => (
+          {(gemini.preventionStrategies || []).map((item, idx) => (
             <li key={idx}>{item}</li>
           ))}
         </ul>
@@ -113,7 +86,7 @@ const Result = () => {
       <section>
         <h2 className="text-lg font-semibold mb-2">Recommended Exercise</h2>
         <ul className="list-disc pl-6 mb-4">
-          {dummyReport.recommendedExercise.map((item, idx) => (
+          {(gemini.recommendedExercise || []).map((item, idx) => (
             <li key={idx}>{item}</li>
           ))}
         </ul>
@@ -123,7 +96,7 @@ const Result = () => {
       <section>
         <h2 className="text-lg font-semibold mb-2">Nutrition Guidance</h2>
         <ul className="list-disc pl-6 mb-4">
-          {dummyReport.nutritionGuidance.map((item, idx) => (
+          {(gemini.nutritionGuidance || []).map((item, idx) => (
             <li key={idx}>{item}</li>
           ))}
         </ul>
@@ -133,7 +106,7 @@ const Result = () => {
       <section>
         <h2 className="text-lg font-semibold mb-2">Precautionary Measures</h2>
         <ul className="list-disc pl-6 mb-4">
-          {dummyReport.precautionaryMeasures.map((item, idx) => (
+          {(gemini.precautionaryMeasures || []).map((item, idx) => (
             <li key={idx}>{item}</li>
           ))}
         </ul>
@@ -143,7 +116,7 @@ const Result = () => {
       <section>
         <h2 className="text-lg font-semibold mb-2">Home Remedies</h2>
         <ul className="list-disc pl-6 mb-4">
-          {dummyReport.homeRemedies.map((item, idx) => (
+          {(gemini.homeRemedies || []).map((item, idx) => (
             <li key={idx}>{item}</li>
           ))}
         </ul>

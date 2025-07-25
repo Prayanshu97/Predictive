@@ -10,10 +10,12 @@ import { SignIn, SignUp } from '@clerk/clerk-react';
 import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
+import { useEnsureUserProfile } from './lib/useEnsureUserProfile';
 
-function App() {
+function AppRoutes() {
+  useEnsureUserProfile();
   return (
-    <Router>
+    <>
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -23,10 +25,17 @@ function App() {
         <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" forceRedirectUrl="/" /> } />
         <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" forceRedirectUrl="/" />} />
         <Route path=":userId/profile" element={<><SignedIn><Profile /></SignedIn><SignedOut><RedirectToSignIn /></SignedOut></>} />
-       
         <Route path='*' element={<Navigate to='/' />} />
       </Routes>
       <Footer />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppRoutes />
     </Router>
   );
 }

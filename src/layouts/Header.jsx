@@ -1,20 +1,32 @@
 import React from 'react';
-import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
-import { Link } from 'react-router-dom';
+import { SignedIn, SignedOut, UserButton, useUser } from '@clerk/clerk-react';
+import { Link, NavLink } from 'react-router-dom';
 import { Button } from '@/components/ui/button'; // If you use a custom Button
 
 function Header() {
+  const { user } = useUser();
   return (
     <div className='flex justify-between items-center m-5 text-sm'>
       {/* Header Left */}
       <div>Logo</div>
 
       {/* Header Center */}
-      <div className='flex justify-center space-x-5 text-sm ml-40'>
-        <Link to="/">
-          <div className="cursor-pointer">Home</div>
-        </Link>
-        <div>Predictor</div>
+      <div className='flex justify-center space-x-5 text-sm'>
+        {!user && (
+          <NavLink to="/" className={({ isActive }) => isActive ? "cursor-pointer font-bold text-blue-700 underline" : "cursor-pointer"} end>
+            Home
+          </NavLink>
+        )}
+        {user && (
+          <NavLink to={`/${user.id}/profile`} className={({ isActive }) => isActive ? "cursor-pointer font-bold text-blue-700 underline" : "cursor-pointer"}>
+            Profile
+          </NavLink>
+        )}
+        {user && (
+          <NavLink to={`/${user.id}/info`} className={({ isActive }) => isActive ? "cursor-pointer font-bold text-blue-700 underline" : "cursor-pointer"}>
+            Predictor
+          </NavLink>
+        )}
         <div>About</div>
       </div>
 

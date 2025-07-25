@@ -8,13 +8,13 @@ import { useUser } from '@clerk/clerk-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Home = () => {
-    const { isSignedIn } = useUser();
+  const { user, isSignedIn } = useUser();
   const navigate = useNavigate();
   const { userId } = useParams();
 
   const handleDiagnoseNow = () => {
-    const infoPath = `/${userId || 'me'}/info`;
-    if (isSignedIn) {
+    const infoPath = `/${user ? user.id : userId || 'me'}/info`;
+    if (isSignedIn && user) {
       navigate(infoPath);
     } else {
       navigate(`/sign-in?redirect_url=${encodeURIComponent(infoPath)}`);
