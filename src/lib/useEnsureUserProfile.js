@@ -17,9 +17,10 @@ export function useEnsureUserProfile() {
       const userId = user.id;
       const userDocRef = doc(db, 'users', userId);
       const userDocSnap = await getDoc(userDocRef);
-      const onHomeOrAuth = ["/", "/sign-in", "/sign-up"].some(path => location.pathname === path || location.pathname.startsWith(path + "/"));
+      const onAuth = ["/sign-in", "/sign-up"].some(path => location.pathname === path || location.pathname.startsWith(path + "/"));
       if (userDocSnap.exists()) {
-        if (onHomeOrAuth) {
+        // No redirect from Home page
+        if (onAuth) {
           navigate(`/${userId}/info`, { replace: true });
         }
       } else {
