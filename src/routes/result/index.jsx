@@ -26,101 +26,192 @@ const Result = () => {
     fetchReport();
   }, [reportId]);
 
-  if (loading) return <div className="max-w-2xl mx-auto p-6">Loading report...</div>;
-  if (error) return <div className="max-w-2xl mx-auto p-6 text-red-600">{error}</div>;
-  if (!report || !report.geminiResponse) return <div className="max-w-2xl mx-auto p-6">No report data available.</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-modern border border-white/20 dark:border-gray-700/20 p-12">
+          <div className="flex items-center space-x-3">
+            <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+            <span className="text-muted-foreground">Loading your health report...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-modern border border-white/20 dark:border-gray-700/20 p-12 text-center">
+          <div className="w-16 h-16 bg-destructive/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-destructive" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <use href="/icons/sprite.svg#error" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-semibold text-foreground mb-2">Error Loading Report</h3>
+          <p className="text-destructive">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!report || !report.geminiResponse) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-modern border border-white/20 dark:border-gray-700/20 p-12 text-center">
+          <div className="w-16 h-16 bg-muted dark:bg-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <use href="/icons/sprite.svg#document-text" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-semibold text-foreground mb-2">No Report Data</h3>
+          <p className="text-muted-foreground">No report data available.</p>
+        </div>
+      </div>
+    );
+  }
 
   const gemini = report.geminiResponse;
 
-  return (
-    <div className="max-w-2xl mx-auto p-6 space-y-8">
-      <h1 className="text-2xl font-bold mb-4">Health Report</h1>
-      <p className="text-base text-muted-foreground mb-6">Report ID: {reportId} | User ID: {userId}</p>
-
-      {/* 1. Predicted Diseases */}
-      <section>
-        <h2 className="text-lg font-semibold mb-2">Predicted Diseases</h2>
-        <div className="overflow-x-auto mb-4">
-          <table className="min-w-full border text-sm">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-3 py-2 border">Disease</th>
-                <th className="px-3 py-2 border">Probability</th>
-                <th className="px-3 py-2 border">Severity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {(gemini.predictedDisease || []).map((d, idx) => (
-                <tr key={idx} className="text-center">
-                  <td className="px-3 py-2 border">{d.name || d}</td>
-                  <td className="px-3 py-2 border">{d.probability || ''}</td>
-                  <td className="px-3 py-2 border">{d.severity || ''}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+  const renderSection = (title, items, icon, color = "primary") => {
+    if (!items || items.length === 0) return null;
+    
+    return (
+      <section className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-modern border border-white/20 dark:border-gray-700/20 p-8 animate-fade-in-up">
+        <div className="flex items-center space-x-3 mb-6">
+          <div className={`w-12 h-12 gradient-${color} rounded-2xl flex items-center justify-center`}>
+            {icon}
+          </div>
+          <h2 className="text-2xl font-bold text-foreground">{title}</h2>
+        </div>
+        <div className="space-y-4">
+          {Array.isArray(items) ? items.map((item, idx) => (
+            <div key={idx} className="flex items-start space-x-3 p-4 bg-muted/30 dark:bg-gray-700/30 rounded-xl border border-border/20 dark:border-gray-600/20">
+              <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+              <p className="text-foreground leading-relaxed">{item}</p>
+            </div>
+          )) : (
+            <div className="p-4 bg-muted/30 dark:bg-gray-700/30 rounded-xl border border-border/20 dark:border-gray-600/20">
+              <p className="text-foreground leading-relaxed">{items}</p>
+            </div>
+          )}
         </div>
       </section>
+    );
+  };
 
-      {/* 2. Personalized Guidance */}
-      <section>
-        <h2 className="text-lg font-semibold mb-2">Personalized Guidance</h2>
-        <ul className="list-disc pl-6 mb-4">
-          {(gemini.personalizedGuidance || []).map((item, idx) => (
-            <li key={idx}>{item}</li>
-          ))}
-        </ul>
-      </section>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+        {/* Header */}
+        <div className="text-center mb-12 animate-fade-in-up">
+          <div className="w-20 h-20 gradient-primary rounded-3xl flex items-center justify-center mx-auto mb-6">
+            <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <use href="/icons/sprite.svg#check-circle" />
+            </svg>
+          </div>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Health Report
+            </span>
+          </h1>
+          <p className="text-xl text-muted-foreground">
+            Your personalized health assessment and recommendations
+          </p>
+          <div className="mt-4 text-sm text-muted-foreground">
+            Report ID: {reportId} • Generated on {new Date(report.createdAt).toLocaleDateString()}
+          </div>
+        </div>
 
-      {/* 3. Prevention Strategies */}
-      <section>
-        <h2 className="text-lg font-semibold mb-2">Prevention Strategies</h2>
-        <ul className="list-disc pl-6 mb-4">
-          {(gemini.preventionStrategies || []).map((item, idx) => (
-            <li key={idx}>{item}</li>
-          ))}
-        </ul>
-      </section>
+        <div className="space-y-8">
+          {/* Predicted Diseases - Now as normal text */}
+          {gemini.predictedDisease && (
+            <section className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-modern border border-white/20 dark:border-gray-700/20 p-8 animate-slide-in-left">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-12 h-12 gradient-primary rounded-2xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <use href="/icons/sprite.svg#bar-chart" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-foreground">Diagnosis Results</h2>
+              </div>
+              <div className="space-y-4">
+                {Array.isArray(gemini.predictedDisease) ? gemini.predictedDisease.map((disease, idx) => (
+                  <div key={idx} className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-xl border border-primary/20 dark:border-primary/30">
+                    <p className="text-foreground font-medium leading-relaxed">{typeof disease === 'string' ? disease : disease.name || disease}</p>
+                  </div>
+                )) : (
+                  <div className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-xl border border-primary/20 dark:border-primary/30">
+                    <p className="text-foreground font-medium leading-relaxed">{gemini.predictedDisease}</p>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
 
-      {/* 4. Recommended Exercise */}
-      <section>
-        <h2 className="text-lg font-semibold mb-2">Recommended Exercise</h2>
-        <ul className="list-disc pl-6 mb-4">
-          {(gemini.recommendedExercise || []).map((item, idx) => (
-            <li key={idx}>{item}</li>
-          ))}
-        </ul>
-      </section>
+          {/* Personalized Guidance */}
+          {renderSection(
+            "Personalized Guidance",
+            gemini.personalizedGuidance,
+            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <use href="/icons/sprite.svg#lightbulb-sparkles" />
+            </svg>,
+            "secondary"
+          )}
 
-      {/* 5. Nutrition Guidance */}
-      <section>
-        <h2 className="text-lg font-semibold mb-2">Nutrition Guidance</h2>
-        <ul className="list-disc pl-6 mb-4">
-          {(gemini.nutritionGuidance || []).map((item, idx) => (
-            <li key={idx}>{item}</li>
-          ))}
-        </ul>
-      </section>
+          {/* Prevention Strategies */}
+          {renderSection(
+            "Prevention Strategies",
+            gemini.preventionStrategies,
+            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <use href="/icons/sprite.svg#lock-closed" />
+            </svg>,
+            "primary"
+          )}
 
-      {/* 6. Precautionary Measures */}
-      <section>
-        <h2 className="text-lg font-semibold mb-2">Precautionary Measures</h2>
-        <ul className="list-disc pl-6 mb-4">
-          {(gemini.precautionaryMeasures || []).map((item, idx) => (
-            <li key={idx}>{item}</li>
-          ))}
-        </ul>
-      </section>
+          {/* Recommended Exercise */}
+          {renderSection(
+            "Recommended Exercise",
+            gemini.recommendedExercise,
+            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <use href="/icons/sprite.svg#bolt-trend" />
+            </svg>,
+            "secondary"
+          )}
 
-      {/* 7. Home Remedies */}
-      <section>
-        <h2 className="text-lg font-semibold mb-2">Home Remedies</h2>
-        <ul className="list-disc pl-6 mb-4">
-          {(gemini.homeRemedies || []).map((item, idx) => (
-            <li key={idx}>{item}</li>
-          ))}
-        </ul>
-      </section>
+          {/* Nutrition Guidance */}
+          {renderSection(
+            "Nutrition Guidance",
+            gemini.nutritionGuidance,
+            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <use href="/icons/sprite.svg#shopping-cart" />
+            </svg>,
+            "primary"
+          )}
+
+          {/* Precautionary Measures */}
+          {renderSection(
+            "Precautionary Measures",
+            gemini.precautionaryMeasures,
+            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <use href="/icons/sprite.svg#shield-exclamation" />
+            </svg>,
+            "secondary"
+          )}
+
+          {/* Home Remedies */}
+          {renderSection(
+            "Home Remedies",
+            gemini.homeRemedies,
+            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <use href="/icons/sprite.svg#beaker" />
+            </svg>,
+            "primary"
+          )}
+
+          
+        </div>
+      </div>
     </div>
   );
 };

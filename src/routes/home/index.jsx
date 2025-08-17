@@ -1,60 +1,238 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import PanToolIcon from '@mui/icons-material/PanTool';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import { useUser } from '@clerk/clerk-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/services/firebaseConfig';
 
 const Home = () => {
   const { user, isSignedIn } = useUser();
   const navigate = useNavigate();
   const { userId } = useParams();
 
-  const handleDiagnoseNow = () => {
-    const infoPath = `/${user ? user.id : userId || 'me'}/info`;
-    if (isSignedIn && user) {
-      navigate(infoPath);
-    } else {
-      navigate(`/sign-in?redirect_url=${encodeURIComponent(infoPath)}`);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+
+  // Close popup when clicking outside or pressing escape
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showLoginPopup && event.target.classList.contains('popup-overlay')) {
+        setShowLoginPopup(false);
+      }
+    };
+
+    const handleEscapeKey = (event) => {
+      if (showLoginPopup && event.key === 'Escape') {
+        setShowLoginPopup(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscapeKey);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [showLoginPopup]);
+
+  const handleDiagnoseNow = async () => {
+    if (!isSignedIn || !user) {
+      setShowLoginPopup(true);
+      return;
+    }
+    
+    try {
+      // Check Firestore for user profile
+      const userDocRef = doc(db, 'users', user.id);
+      const userDocSnap = await getDoc(userDocRef);
+      
+      if (!userDocSnap.exists()) {
+        // First time user - redirect to profile page
+        navigate(`/${user.id}/profile`);
+      } else {
+        // Existing user - redirect to predictor page
+        navigate(`/${user.id}/info`);
+      }
+    } catch (error) {
+      console.error('Error checking user profile:', error);
+      // If there's an error, redirect to profile page as fallback
+      navigate(`/${user.id}/profile`);
     }
   };
 
+  const features = [
+    {
+      icon: <PanToolIcon className="text-4xl text-primary" />,
+      title: "Prevention",
+      description: "Advanced AI-powered disease prevention strategies"
+    },
+    {
+      icon: <VaccinesIcon className="text-4xl text-secondary" />,
+      title: "Remedies",
+      description: "Personalized treatment recommendations"
+    },
+    {
+      icon: <DirectionsRunIcon className="text-4xl text-primary" />,
+      title: "Exercise",
+      description: "Custom fitness plans for optimal health"
+    },
+    {
+      icon: <RestaurantMenuIcon className="text-4xl text-secondary" />,
+      title: "Nutrition",
+      description: "AI-curated diet plans and meal suggestions"
+    }
+  ];
+
   return (
-    <div className='bg-[#FF6B6B] px-60'>
-      <div className="py-40 flex w-full h-screen gap-12 justify-between">
-        {/* Text Section */}
-        <div className="flex-1 flex flex-col items-center text-center justify-center gap-8">
-          <div className='text-gray-50'>An AI Powered Health App</div>
-          <div className='text-gray-50 text-xs ml-auto'>Revolutionizing Healthcare: Comprehensive, Rapid AI Diagnostic App for Accurate Multi-Disease Detection, Prevention with Mental Health Support chatbot.</div>
-          <Button className="w-1/2 bg-red-700" onClick={handleDiagnoseNow}> Diagnose Now </Button>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Text Content */}
+            <div className="space-y-8 animate-fade-in-up">
+              <div className="space-y-4">
+                <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
+                  <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                    Predictive
+                  </span>
+                  <br />
+                  <span className="text-foreground">AI-Powered Health Care</span>
+                </h1>
+                <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+                  Revolutionizing healthcare with comprehensive, rapid AI diagnostic capabilities. 
+                  Get accurate multi-disease detection, prevention strategies, and mental health support.
+                </p>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  onClick={handleDiagnoseNow}
+                  className="gradient-primary text-white text-lg px-8 py-4 rounded-xl hover:shadow-glow transition-all duration-300 font-semibold"
+                >
+                  Start Diagnosis
+                </Button>
+                {showLoginPopup && (
+                  <div
+                    className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 animate-fade-in popup-overlay"
+                    onClick={e => {
+                      if (e.target.classList.contains('popup-overlay')) setShowLoginPopup(false);
+                    }}
+                  >
+                    <div
+                      className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-8 flex flex-col items-center"
+                      onClick={e => e.stopPropagation()}
+                    >
+                      <h2 className="text-xl font-bold mb-4 text-primary">Please login first</h2>
+                      <Button onClick={() => { setShowLoginPopup(false); navigate('/sign-in'); }} className="gradient-primary text-white px-6 py-2 rounded-md mb-2">Login</Button>
+                      <Button variant="outline" onClick={() => setShowLoginPopup(false)} className="px-6 py-2 rounded-md">Cancel</Button>
+                    </div>
+                  </div>
+                )}
+                <Link to="/about">
+                  <Button 
+                    variant="outline" 
+                    className="text-lg px-8 py-4 rounded-xl border-2 border-primary/20 hover:border-primary hover:bg-primary/5 transition-all duration-300 font-semibold dark:border-primary/30 dark:hover:bg-primary/10"
+                  >
+                    Learn More
+                  </Button>
+                </Link>
+              </div>
 
-        {/* Image Section */}
-        <div className='flex-1 flex items-center justify-center p-4 rounded-lg shadow-lg bg-red-300'>
-          <img
-            className="rounded-lg"
-            src="https://as1.ftcdn.net/v2/jpg/02/68/84/80/1000_F_268848009_j3m4yVKfh3MDdFLynVa8b9G2u7LN0ilZ.jpg" // Replace with actual path or import
-            alt="Health app blocks"
-          />
-        </div>
-      </div>
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-6 pt-8">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-primary">99%</div>
+                  <div className="text-sm text-muted-foreground">Accuracy</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-secondary">24/7</div>
+                  <div className="text-sm text-muted-foreground">Support</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-primary">10k+</div>
+                  <div className="text-sm text-muted-foreground">Users</div>
+                </div>
+              </div>
+            </div>
 
-      {/* Detail section  */}
-      <div className=''>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus quod asperiores ipsa incidunt ad repudiandae quis cupiditate consequuntur quas totam doloribus laudantium recusandae consectetur quos natus quidem modi saepe, soluta iste doloremque? Perferendis perspiciatis ipsum quisquam reiciendis necessitatibus consequatur! Ad laudantium illum maxime veniam, voluptatem dolorum aperiam impedit modi placeat eos? Velit laudantium debitis doloremque id nulla labore iste, maiores aliquid iure nostrum fuga nam qui ea ducimus officia, accusantium inventore iusto eaque, esse laboriosam. Voluptatem quas porro totam aliquid eum officia itaque autem dicta! Labore aspernatur laboriosam animi quia nam et maiores quidem molestias libero tempore. Voluptatem eos iusto nam rerum incidunt illo, beatae non fugit temporibus cupiditate voluptas est quisquam maxime accusantium sint blanditiis magni ullam numquam voluptatum suscipit nihil? Odit commodi, placeat saepe totam cum mollitia minus quo accusantium consequatur eveniet expedita corporis ea, sint pariatur in magni sit quis reiciendis fugit. Similique esse itaque asperiores voluptatibus?
-      </div>
+            {/* Image/Visual */}
+            <div className="relative animate-slide-in-right">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl blur-3xl dark:from-primary/10 dark:to-secondary/10"></div>
+                <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 shadow-modern border border-white/20 dark:border-gray-700/20">
+                  <img
+                    className="w-full h-auto rounded-2xl shadow-lg"
+                    src="https://as1.ftcdn.net/v2/jpg/02/68/84/80/1000_F_268848009_j3m4yVKfh3MDdFLynVa8b9G2u7LN0ilZ.jpg"
+                    alt="AI Health Technology"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Features Section */}
-      <div className='py-20 flex items-center justify-evenly gap-8'>
-        <div className='flex flex-col bg-gray-100 p-10 rounded-lg justify-evenly items-center'>Precaution<PanToolIcon fontSize='large' ></PanToolIcon></div>
-        <div className='flex flex-col bg-gray-100 p-10 rounded-lg justify-evenly items-center'>Remedies<VaccinesIcon fontSize='large' ></VaccinesIcon></div>
-        <div className='flex flex-col bg-gray-100 p-10 rounded-lg justify-evenly items-center'>Exercise<DirectionsRunIcon fontSize='large'></DirectionsRunIcon></div>
-        <div className='flex flex-col bg-gray-100 p-10 rounded-lg justify-evenly items-center'>Diet<RestaurantMenuIcon fontSize='large'></RestaurantMenuIcon></div>
-      </div>
+      <section className="py-20 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+              Comprehensive Health Solutions
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Our AI-powered platform provides everything you need for optimal health management
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <div 
+                key={index}
+                className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-modern hover:shadow-glow transition-all duration-300 border border-border/50 hover:border-primary/20 dark:border-gray-700/50 dark:hover:border-primary/30"
+              >
+                <div className="flex flex-col items-center text-center space-y-4">
+                  <div className="p-4 rounded-2xl bg-gradient-to-br from-muted to-background dark:from-gray-700 dark:to-gray-600 group-hover:scale-110 transition-transform duration-300">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground">{feature.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
+              Why Choose HealthAI?
+            </h2>
+            <div className="prose prose-lg mx-auto text-muted-foreground leading-relaxed dark:prose-invert">
+              <p>
+                Our cutting-edge AI technology combines advanced machine learning algorithms with comprehensive medical databases 
+                to provide you with accurate, personalized health insights. Whether you're looking to prevent illness, 
+                understand symptoms, or optimize your wellness routine, our platform offers the tools and guidance you need 
+                to take control of your health journey.
+              </p>
+              <p>
+                With 24/7 availability, instant analysis, and continuous learning capabilities, HealthAI ensures you always 
+                have access to the most up-to-date health information and recommendations. Our commitment to privacy and 
+                security means your health data remains confidential while you receive the personalized care you deserve.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
 
-export default Home; 
+export default Home;
