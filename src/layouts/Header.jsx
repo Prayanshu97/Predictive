@@ -121,11 +121,12 @@ function Header() {
             to="/"
             className="flex items-center space-x-2 sm:space-x-3 hover:scale-105 transition-transform duration-300"
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl gradient-primary flex items-center justify-center">
-              <span className="text-white font-bold text-sm sm:text-lg">
-                AI
-              </span>
-            </div>
+            <img
+                src="/Logo.png"
+                alt="Logo"
+                className="h-10 w-10 lg:w-15 lg:h-15 mr-0 "
+                style={{ maxWidth: '100%', maxHeight: '100%' }}
+             />
             <span className="font-bold text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               Predictive
             </span>

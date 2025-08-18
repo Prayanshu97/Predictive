@@ -46,7 +46,7 @@ const About = () => {
                 About
               </span>
               <br />
-              <span className="text-foreground">Predictive HealthAI</span>
+              <span className="text-foreground">Predictive</span>
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto px-4">
               Revolutionizing healthcare through the power of artificial intelligence. 
@@ -65,7 +65,7 @@ const About = () => {
             </h2>
             <div className="prose prose-sm sm:prose-base lg:prose-lg mx-auto text-muted-foreground leading-relaxed dark:prose-invert px-4">
               <p>
-                At Predictive HealthAI, we believe that everyone deserves access to advanced healthcare technology. 
+                At Predictive, we believe that everyone deserves access to advanced healthcare technology. 
                 Our mission is to democratize health diagnostics by leveraging cutting-edge AI to provide accurate, 
                 comprehensive, and personalized health insights to individuals worldwide.
               </p>
@@ -150,7 +150,7 @@ const About = () => {
               Ready to Experience the Future of Healthcare?
             </h2>
             <p className="text-xl text-muted-foreground">
-              Join thousands of users who trust Predictive HealthAI for their health diagnostics
+              Join thousands of users who trust Predictive for their health diagnostics
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/">

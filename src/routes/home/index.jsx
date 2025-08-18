@@ -206,7 +206,7 @@ const Home = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center space-y-6 sm:space-y-8">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
-              Why Choose HealthAI?
+              Why Choose Predictive?
             </h2>
             <div className="prose prose-sm sm:prose-base lg:prose-lg mx-auto text-muted-foreground leading-relaxed dark:prose-invert">
               <p>
@@ -216,7 +216,7 @@ const Home = () => {
                 to take control of your health journey.
               </p>
               <p>
-                With 24/7 availability, instant analysis, and continuous learning capabilities, HealthAI ensures you always 
+                With 24/7 availability, instant analysis, and continuous learning capabilities, Predictive ensures you always 
                 have access to the most up-to-date health information and recommendations. Our commitment to privacy and 
                 security means your health data remains confidential while you receive the personalized care you deserve.
               </p>

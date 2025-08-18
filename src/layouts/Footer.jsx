@@ -12,7 +12,7 @@ function Footer() {
                 <span className="text-white font-bold text-xs sm:text-sm">AI</span>
               </div>
               <span className="font-bold text-lg sm:text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                HealthAI
+                Predictive
               </span>
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
@@ -31,7 +31,7 @@ function Footer() {
           {/* Copyright */}
           <div className="text-center sm:text-right sm:col-span-2 lg:col-span-1">
             <p className="text-xs sm:text-sm text-muted-foreground">
-              © 2025 HealthAI. All rights reserved.
+              © 2025 Predictive. All rights reserved.
             </p>
             <div className="flex flex-col sm:flex-row justify-center sm:justify-end space-y-2 sm:space-y-0 sm:space-x-4 mt-2">
               <a href="#" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors">
