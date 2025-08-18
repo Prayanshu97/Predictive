@@ -64,7 +64,7 @@ const Info = () => {
           <div className="text-center space-y-4">
             <h1 className="text-4xl lg:text-5xl font-bold">
               <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Welcome back
+                Welcome
               </span>
               <br />
               <span className="text-foreground">

@@ -21,7 +21,7 @@ export function useEnsureUserProfile() {
       if (userDocSnap.exists()) {
         // No redirect from Home page
         if (onAuth) {
-          navigate(`/${userId}/info`, { replace: true });
+          navigate(`/`, { replace: true });
         }
       } else {
         if (!location.pathname.includes('/profile')) {

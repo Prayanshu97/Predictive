@@ -102,9 +102,7 @@ const Details = () => {
       <section>
         <h2 className="text-lg font-semibold mb-4">Symptoms Severity</h2>
         <div>
-          <label className="block mb-1">Select Severity</label>
           <select name="severity" value={form.severity} onChange={handleChange} className="w-full border rounded-md px-3 py-2" required>
-            <option value="">Select Severity</option>
             <option value="Mild">Mild</option>
             <option value="Moderate">Moderate</option>
             <option value="Severe">Severe</option>
