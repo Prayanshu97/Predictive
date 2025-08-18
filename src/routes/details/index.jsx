@@ -116,7 +116,7 @@ const Details = () => {
         <h2 className="text-lg font-semibold mb-4">Duration</h2>
         <Input type="text" name="duration" value={form.duration} onChange={handleChange} placeholder="e.g. 3 days, 1 week" required />
       </section>
-      <button type="submit" className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" disabled={loading}>
+      <button type="submit" className="mt-6 px-6 py-2 gradient-primary text-white rounded-xl hover:shadow-glow transition-all duration-300 font-semibold" disabled={loading}>
         {loading ? 'Generating Report...' : 'Generate Diagnosis Report'}
       </button>
     </form>

@@ -160,14 +160,14 @@ const About = () => {
                   Get Started
                 </Button>
               </Link>
-              <Link to="/">
+              {/* <Link to="/">
                 <Button 
                   variant="outline" 
                   className="text-lg px-8 py-4 rounded-xl border-2 border-primary/20 hover:border-primary hover:bg-primary/5 transition-all duration-300 font-semibold dark:border-primary/30 dark:hover:bg-primary/10"
                 >
                   Learn More
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

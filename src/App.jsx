@@ -12,12 +12,14 @@ import SignUpPage from './auth/SignUpPage';
 import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import { useEnsureUserProfile } from './lib/useEnsureUserProfile';
 
 function AppRoutes() {
   useEnsureUserProfile();
   return (
     <>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />

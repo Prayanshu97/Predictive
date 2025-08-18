@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer className="bg-gradient-to-r from-secondary/10 via-primary/5 to-secondary/10 dark:from-secondary/20 dark:via-primary/10 dark:to-secondary/20 backdrop-blur border-t border-border/40 dark:border-gray-700/40 mt-12 sm:mt-16 lg:mt-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-end">
           {/* Logo and Brand */}
           <div className="text-center sm:text-left">
             <div className="flex items-center justify-center sm:justify-start space-x-2 mb-4">
@@ -22,12 +22,10 @@ function Footer() {
 
           {/* Disclaimer */}
           <div className="text-center sm:col-span-2 lg:col-span-1">
-            <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur rounded-xl p-3 sm:p-4 border border-border/50 dark:border-gray-700/50 shadow-modern">
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                <strong className="text-foreground">Disclaimer:</strong> This information is AI-generated and for informational purposes only. 
-                Consult a healthcare professional before taking any medication or making medical decisions.
-              </p>
-            </div>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">Disclaimer:</strong> This information is AI-generated and for informational purposes only. 
+              Consult a healthcare professional before taking any medication or making medical decisions.
+            </p>
           </div>
 
           {/* Copyright */}
