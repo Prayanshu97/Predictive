@@ -91,7 +91,7 @@ const Home = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 xl:py-32">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12+ sm:py-16 lg:py-20 xl:py-32">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Text Content */}
             <div className="space-y-6 sm:space-y-8 animate-fade-in-up text-center lg:text-left">
@@ -160,7 +160,7 @@ const Home = () => {
                 <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-4 sm:p-6 lg:p-8 shadow-modern border border-white/20 dark:border-gray-700/20">
                   <img
                     className="w-full h-auto rounded-2xl shadow-lg"
-                    src="https://as1.ftcdn.net/v2/jpg/02/68/84/80/1000_F_268848009_j3m4yVKfh3MDdFLynVa8b9G2u7LN0ilZ.jpg"
+                    src="image.jpg"
                     alt="AI Health Technology"
                   />
                 </div>

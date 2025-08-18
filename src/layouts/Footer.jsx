@@ -2,15 +2,18 @@ import React from 'react'
 
 function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-secondary/10 via-primary/5 to-secondary/10 dark:from-secondary/20 dark:via-primary/10 dark:to-secondary/20 backdrop-blur border-t border-border/40 dark:border-gray-700/40 mt-12 sm:mt-16 lg:mt-20">
+    <footer className="bg-gradient-to-r from-secondary/10 via-primary/5 to-secondary/10 dark:from-secondary/20 dark:via-primary/10 dark:to-secondary/20 backdrop-blur border-t border-border/40 dark:border-gray-700/40 ">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-end">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-center">
           {/* Logo and Brand */}
           <div className="text-center sm:text-left">
             <div className="flex items-center justify-center sm:justify-start space-x-2 mb-4">
-              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg gradient-primary flex items-center justify-center">
-                <span className="text-white font-bold text-xs sm:text-sm">AI</span>
-              </div>
+              <img
+                src="/Logo.png"
+                alt="Logo"
+                className="h-10 w-10 lg:w-15 lg:h-15 mr-0 "
+                style={{ maxWidth: '100%', maxHeight: '100%' }}
+             />
               <span className="font-bold text-lg sm:text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                 Predictive
               </span>

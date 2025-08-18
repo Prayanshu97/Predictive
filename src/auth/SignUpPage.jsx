@@ -69,7 +69,7 @@ const SignUpPage = () => {
         {error && <div className="text-red-600 mb-2">{error}</div>}
         <button
           type="submit"
-          className="gradient-primary text-white px-6 py-2 rounded-md mb-2 w-full"
+          className="gradient-primary text-white px-6 py-2 rounded-md mb-2 w-full cursor-pointer"
           disabled={loading || !isLoaded}
         >
           {loading ? "Signing up..." : "Sign Up"}
@@ -78,7 +78,7 @@ const SignUpPage = () => {
           Already have an account?{" "}
           <button
             type="button"
-            className="text-primary underline"
+            className="text-primary cursor-pointer"
             onClick={() => navigate("/sign-in")}
           >
             Sign in
