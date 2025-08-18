@@ -22,7 +22,7 @@ function Profile() {
     familyHistory: "",
     medications: "",
     activityLevel: "",
-    dietaryPreferences: ""
+    dietaryPreferences: "",
   });
   const [loading, setLoading] = useState(false);
   const [checkingProfile, setCheckingProfile] = useState(true);
@@ -39,7 +39,11 @@ function Profile() {
         const userDoc = await getDoc(doc(db, "users", uid));
         if (userDoc.exists()) {
           setProfileExists(true);
-          setForm({ ...form, ...userDoc.data(), age: userDoc.data().age?.toString() || "" });
+          setForm({
+            ...form,
+            ...userDoc.data(),
+            age: userDoc.data().age?.toString() || "",
+          });
         }
       } catch (err) {
         setError("Error checking profile: " + err.message);
@@ -113,7 +117,8 @@ function Profile() {
               </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Help us provide personalized health insights by sharing your medical information
+              Help us provide personalized health insights by sharing your
+              medical information
             </p>
           </div>
 
@@ -127,14 +132,21 @@ function Profile() {
             <div className="bg-secondary/10 border border-secondary/20 rounded-xl p-6 flex items-center justify-between animate-fade-in-up">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 gradient-secondary rounded-xl flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <svg
+                    className="w-5 h-5 text-white"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
                     <use href="/icons/sprite.svg#check-circle" />
                   </svg>
                 </div>
-                <span className="text-foreground font-medium">Your profile is up to date.</span>
+                <span className="text-foreground font-medium">
+                  Your profile is up to date.
+                </span>
               </div>
-              <Button 
-                type="button" 
+              <Button
+                type="button"
                 variant="outline"
                 onClick={() => setEditing(true)}
                 className="hover:bg-secondary hover:text-white transition-all duration-300"
@@ -149,47 +161,60 @@ function Profile() {
             <div className="space-y-6">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <svg
+                    className="w-5 h-5 text-white"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
                     <use href="/icons/sprite.svg#user" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-foreground">Basic Information</h2>
+                <h2 className="text-2xl font-bold text-foreground">
+                  Basic Information
+                </h2>
               </div>
-              
+
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Full Name</label>
-                  <Input 
-                    type="text" 
-                    name="name" 
-                    value={form.name} 
-                    onChange={handleChange} 
-                    placeholder="Enter your full name" 
-                    disabled={profileExists && !editing} 
-                    required 
+                  <label className="text-sm font-medium text-foreground">
+                    Full Name
+                  </label>
+                  <Input
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="Enter your full name"
+                    disabled={profileExists && !editing}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Age</label>
-                  <Input 
-                    type="number" 
-                    name="age" 
-                    value={form.age} 
-                    onChange={handleChange} 
-                    placeholder="Age in years" 
-                    min={0} 
-                    disabled={profileExists && !editing} 
-                    required 
+                  <label className="text-sm font-medium text-foreground">
+                    Age
+                  </label>
+                  <Input
+                    type="number"
+                    name="age"
+                    value={form.age}
+                    onChange={handleChange}
+                    placeholder="Age in years"
+                    min={0}
+                    disabled={profileExists && !editing}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Gender</label>
-                  <select 
-                    name="gender" 
-                    value={form.gender} 
-                    onChange={handleChange} 
-                    className="w-full h-11 shadow-modern transition-all duration-300 disabled:opacity-50" 
-                    disabled={profileExists && !editing} 
+                  <label className="text-sm font-medium text-foreground">
+                    Gender
+                  </label>
+                  <select
+                    name="gender"
+                    value={form.gender}
+                    onChange={handleChange}
+                    className="w-full h-11 shadow-modern transition-all duration-300 disabled:opacity-50"
+                    disabled={profileExists && !editing}
                     required
                   >
                     <option value="">Select Gender</option>
@@ -207,72 +232,89 @@ function Profile() {
             <div className="space-y-6">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 gradient-secondary rounded-xl flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <svg
+                    className="w-5 h-5 text-white"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
                     <use href="/icons/sprite.svg#document-text" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-foreground">Medical History</h2>
+                <h2 className="text-2xl font-bold text-foreground">
+                  Medical History
+                </h2>
               </div>
-              
+
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Pre-existing Medical Conditions</label>
-                  <Input 
-                    type="text" 
-                    name="medicalConditions" 
-                    value={form.medicalConditions} 
-                    onChange={handleChange} 
-                    placeholder="e.g. Diabetes, Hypertension, Heart Disease, Asthma OR None" 
-                    disabled={profileExists && !editing} 
-                    required 
+                  <label className="text-sm font-medium text-foreground">
+                    Pre-existing Medical Conditions
+                  </label>
+                  <Input
+                    type="text"
+                    name="medicalConditions"
+                    value={form.medicalConditions}
+                    onChange={handleChange}
+                    placeholder="e.g. Diabetes, Hypertension, Heart Disease, Asthma OR None"
+                    disabled={profileExists && !editing}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Chronic Illnesses</label>
-                  <Input 
-                    type="text" 
-                    name="chronicIllnesses" 
-                    value={form.chronicIllnesses} 
-                    onChange={handleChange} 
-                    placeholder="e.g. Kidney Disease, Arthritis, Thyroid Disorders OR None" 
-                    disabled={profileExists && !editing} 
-                    required 
+                  <label className="text-sm font-medium text-foreground">
+                    Chronic Illnesses
+                  </label>
+                  <Input
+                    type="text"
+                    name="chronicIllnesses"
+                    value={form.chronicIllnesses}
+                    onChange={handleChange}
+                    placeholder="e.g. Kidney Disease, Arthritis, Thyroid Disorders OR None"
+                    disabled={profileExists && !editing}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Allergies</label>
-                  <Input 
-                    type="text" 
-                    name="allergies" 
-                    value={form.allergies} 
-                    onChange={handleChange} 
-                    placeholder="e.g. Food, Medication, Environmental OR None" 
-                    disabled={profileExists && !editing} 
-                    required 
+                  <label className="text-sm font-medium text-foreground">
+                    Allergies
+                  </label>
+                  <Input
+                    type="text"
+                    name="allergies"
+                    value={form.allergies}
+                    onChange={handleChange}
+                    placeholder="e.g. Food, Medication, Environmental OR None"
+                    disabled={profileExists && !editing}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Family Medical History</label>
-                  <Input 
-                    type="text" 
-                    name="familyHistory" 
-                    value={form.familyHistory} 
-                    onChange={handleChange} 
-                    placeholder="e.g. Cancer, Heart Disease, Diabetes OR None" 
-                    disabled={profileExists && !editing} 
-                    required 
+                  <label className="text-sm font-medium text-foreground">
+                    Family Medical History
+                  </label>
+                  <Input
+                    type="text"
+                    name="familyHistory"
+                    value={form.familyHistory}
+                    onChange={handleChange}
+                    placeholder="e.g. Cancer, Heart Disease, Diabetes OR None"
+                    disabled={profileExists && !editing}
+                    required
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Current Medications</label>
-                  <Input 
-                    type="text" 
-                    name="medications" 
-                    value={form.medications} 
-                    onChange={handleChange} 
-                    placeholder="e.g. Prescription drugs, supplements, treatments OR None" 
-                    disabled={profileExists && !editing} 
-                    required 
+                  <label className="text-sm font-medium text-foreground">
+                    Current Medications
+                  </label>
+                  <Input
+                    type="text"
+                    name="medications"
+                    value={form.medications}
+                    onChange={handleChange}
+                    placeholder="e.g. Prescription drugs, supplements, treatments OR None"
+                    disabled={profileExists && !editing}
+                    required
                   />
                 </div>
               </div>
@@ -284,22 +326,31 @@ function Profile() {
             <div className="space-y-6">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <svg
+                    className="w-5 h-5 text-white"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
                     <use href="/icons/sprite.svg#bolt-trend" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-foreground">Lifestyle & Habits</h2>
+                <h2 className="text-2xl font-bold text-foreground">
+                  Lifestyle & Habits
+                </h2>
               </div>
-              
+
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Physical Activity Level</label>
-                  <select 
-                    name="activityLevel" 
-                    value={form.activityLevel} 
-                    onChange={handleChange} 
-                    className="w-full h-11 shadow-modern transition-all duration-300 disabled:opacity-50" 
-                    disabled={profileExists && !editing} 
+                  <label className="text-sm font-medium text-foreground">
+                    Physical Activity Level
+                  </label>
+                  <select
+                    name="activityLevel"
+                    value={form.activityLevel}
+                    onChange={handleChange}
+                    className="w-full h-11 shadow-modern transition-all duration-300 disabled:opacity-50"
+                    disabled={profileExists && !editing}
                     required
                   >
                     <option value="">Select Activity Level</option>
@@ -310,13 +361,15 @@ function Profile() {
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Dietary Preferences</label>
-                  <select 
-                    name="dietaryPreferences" 
-                    value={form.dietaryPreferences} 
-                    onChange={handleChange} 
-                    className="w-full h-11 shadow-modern transition-all duration-300 disabled:opacity-50" 
-                    disabled={profileExists && !editing} 
+                  <label className="text-sm font-medium text-foreground">
+                    Dietary Preferences
+                  </label>
+                  <select
+                    name="dietaryPreferences"
+                    value={form.dietaryPreferences}
+                    onChange={handleChange}
+                    className="w-full h-11 shadow-modern transition-all duration-300 disabled:opacity-50"
+                    disabled={profileExists && !editing}
                     required
                   >
                     <option value="">Select Dietary Preference</option>
@@ -332,8 +385,8 @@ function Profile() {
           {/* Submit Button */}
           {(!profileExists || editing) && (
             <div className="text-center animate-fade-in-up">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={loading}
                 className="gradient-primary text-white text-lg px-8 py-4 rounded-xl hover:shadow-glow transition-all duration-300 font-semibold"
               >
@@ -343,7 +396,7 @@ function Profile() {
                     <span>Saving Profile...</span>
                   </div>
                 ) : (
-                  'Save Profile'
+                  "Save Profile"
                 )}
               </Button>
             </div>

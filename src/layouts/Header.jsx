@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { SignedIn, SignedOut, UserButton, useUser } from '@clerk/clerk-react';
-import { Link, NavLink } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import React, { useState, useEffect } from "react";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
+import { Link, NavLink } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+
 
 function Header() {
   const { user } = useUser();
@@ -9,25 +10,27 @@ function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
       setIsDark(true);
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     }
   }, []);
 
   const toggleDarkMode = () => {
     const newTheme = !isDark;
     setIsDark(newTheme);
-    
+
     if (newTheme) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
   };
 
@@ -42,33 +45,86 @@ function Header() {
           {/* Mobile Menu Button - Left Side */}
           <button
             onClick={toggleMobileMenu}
-            className="lg:hidden p-2 sm:p-2.5 rounded-xl bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-700 hover:shadow-lg active:scale-95 transition-all duration-300 shadow-modern flex items-center justify-center border border-gray-200/50 dark:border-gray-600/50 hover:border-primary/30 dark:hover:border-primary/50"
+            className="lg:hidden min-w-[40px] min-h-[40px] rounded-xl bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-700 hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 shadow-modern flex items-center justify-center border border-gray-200/50 dark:border-gray-600/50 hover:border-primary/30 dark:hover:border-primary/50 overflow-visible"
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileMenuOpen}
           >
-            <div className="relative w-5 h-5 flex items-center justify-center">
-              <span className={`absolute inset-0 transform transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'rotate-45 translate-y-0' : '-translate-y-1'}`}>
-                <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16" />
+            <div className="relative w-6 h-5 flex items-center justify-center overflow-visible">
+              <span
+                className={`absolute inset-0 transform transition-all duration-300 ease-in-out ${
+                  isMobileMenuOpen
+                    ? "rotate-45 translate-y-0"
+                    : "-translate-y-1"
+                }`}
+              >
+                  <svg
+                    className="w-5 h-5 text-gray-700 dark:text-gray-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M4 6h16"
+                  />
                 </svg>
               </span>
-              <span className={`absolute inset-0 transform transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
-                <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 12h16" />
+              <span
+                className={`absolute inset-0 transform transition-all duration-300 ease-in-out ${
+                  isMobileMenuOpen
+                    ? "opacity-0 scale-0"
+                    : "opacity-100 scale-100"
+                }`}
+              >
+                  <svg
+                    className="w-5 h-5 text-gray-700 dark:text-gray-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M4 12h16"
+                  />
                 </svg>
               </span>
-              <span className={`absolute inset-0 transform transition-all duration-300 ease-in-out ${isMobileMenuOpen ? '-rotate-45 translate-y-0' : 'translate-y-1'}`}>
-                <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 18h16" />
+              <span
+                className={`absolute inset-0 transform transition-all duration-300 ease-in-out ${
+                  isMobileMenuOpen
+                    ? "-rotate-45 translate-y-0"
+                    : "translate-y-1"
+                }`}
+              >
+                  <svg
+                    className="w-5 h-5 text-gray-700 dark:text-gray-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M4 18h16"
+                  />
                 </svg>
               </span>
             </div>
           </button>
 
           {/* Logo - Center */}
-          <Link to="/" className="flex items-center space-x-2 sm:space-x-3 hover:scale-105 transition-transform duration-300">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 sm:space-x-3 hover:scale-105 transition-transform duration-300"
+          >
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl gradient-primary flex items-center justify-center">
-              <span className="text-white font-bold text-sm sm:text-lg">AI</span>
+              <span className="text-white font-bold text-sm sm:text-lg">
+                AI
+              </span>
             </div>
             <span className="font-bold text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               Predictive
@@ -77,12 +133,12 @@ function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-2">
-            <NavLink 
-              to="/" 
-              className={({ isActive }) => 
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
                 `px-3 sm:px-4 py-2 rounded-xl text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 ${
-                  isActive 
-                    ? "gradient-primary text-white shadow-glow font-semibold" 
+                  isActive
+                    ? "gradient-primary text-white shadow-glow font-semibold"
                     : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
                 }`
               }
@@ -91,12 +147,12 @@ function Header() {
               Home
             </NavLink>
             {user && (
-              <NavLink 
-                to={`/${user.id}/profile`} 
-                className={({ isActive }) => 
+              <NavLink
+                to={`/${user.id}/profile`}
+                className={({ isActive }) =>
                   `px-3 sm:px-4 py-2 rounded-xl text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 ${
-                    isActive 
-                      ? "gradient-primary text-white shadow-glow font-semibold" 
+                    isActive
+                      ? "gradient-primary text-white shadow-glow font-semibold"
                       : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
                   }`
                 }
@@ -105,12 +161,12 @@ function Header() {
               </NavLink>
             )}
             {user && (
-              <NavLink 
-                to={`/${user.id}/info`} 
-                className={({ isActive }) => 
+              <NavLink
+                to={`/${user.id}/info`}
+                className={({ isActive }) =>
                   `px-3 sm:px-4 py-2 rounded-xl text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 ${
-                    isActive 
-                      ? "gradient-primary text-white shadow-glow font-semibold" 
+                    isActive
+                      ? "gradient-primary text-white shadow-glow font-semibold"
                       : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
                   }`
                 }
@@ -118,12 +174,12 @@ function Header() {
                 Predictor
               </NavLink>
             )}
-            <NavLink 
-              to="/about" 
-              className={({ isActive }) => 
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
                 `px-3 sm:px-4 py-2 rounded-xl text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 ${
-                  isActive 
-                    ? "gradient-primary text-white shadow-glow font-semibold" 
+                  isActive
+                    ? "gradient-primary text-white shadow-glow font-semibold"
                     : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
                 }`
               }
@@ -137,47 +193,54 @@ function Header() {
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-1.5 sm:p-2 rounded-xl bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-700 transition-all duration-300 group shadow-modern flex items-center justify-center"
+              className="p-1.5 sm:p-2 rounded-xl bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-700 hover:scale-105 active:scale-95 transition-all duration-300 group shadow-modern flex items-center justify-center"
               aria-label="Toggle dark mode"
             >
               {isDark ? (
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 group-hover:scale-110 transition-transform duration-300"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
                   <use href="/icons/sprite.svg#sun" />
                 </svg>
               ) : (
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 group-hover:scale-110 transition-transform duration-300"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
                   <use href="/icons/sprite.svg#moon" />
                 </svg>
               )}
             </button>
 
-
-
             <SignedOut>
               <div className="hidden sm:flex items-center space-x-2">
                 <Link to="/sign-in">
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="text-sm sm:text-base font-medium hover:text-primary transition-all duration-300 hover:scale-105 bg-white/60 dark:bg-gray-800/60 hover:bg-white/80 dark:hover:bg-gray-700/80"
                   >
                     Sign In
                   </Button>
                 </Link>
                 <Link to="/sign-up">
-                  <Button 
-                    className="gradient-primary text-white text-sm sm:text-base font-medium hover:shadow-glow transition-all duration-300 px-4 sm:px-6 py-2"
-                  >
+                  <Button className="gradient-primary text-white text-sm sm:text-base font-medium hover:shadow-glow transition-all duration-300 px-4 sm:px-6 py-2">
                     Get Started
                   </Button>
                 </Link>
               </div>
             </SignedOut>
+
+            {/* User Button - Only when signed in */}
             <SignedIn>
-              <UserButton 
+              <UserButton
                 appearance={{
                   elements: {
-                    avatarBox: "w-8 h-8 sm:w-10 sm:h-10 rounded-xl shadow-modern"
-                  }
+                    avatarBox:
+                      "w-8 h-8 sm:w-10 sm:h-10 rounded-xl shadow-modern",
+                  },
                 }}
               />
             </SignedIn>
@@ -185,88 +248,94 @@ function Header() {
         </div>
 
         {/* Mobile Menu */}
-        <div className={`lg:hidden fixed top-16 sm:top-20 left-0 w-64 h-screen bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-r border-border/40 dark:border-gray-700/40 shadow-lg transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-            <nav className="py-4 space-y-2">
-              <NavLink 
-                to="/" 
-                className={({ isActive }) => 
-                  `block px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
-                    isActive 
-                      ? "gradient-primary text-white shadow-glow font-semibold" 
-                      : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
-                  }`
-                }
-                onClick={() => setIsMobileMenuOpen(false)}
-                end
-              >
-                Home
-              </NavLink>
-              {user && (
-                <NavLink 
-                  to={`/${user.id}/profile`} 
-                  className={({ isActive }) => 
-                    `block px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
-                      isActive 
-                        ? "gradient-primary text-white shadow-glow font-semibold" 
-                        : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
-                    }`
-                  }
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Profile
-                </NavLink>
-              )}
-              {user && (
-                <NavLink 
-                  to={`/${user.id}/info`} 
-                  className={({ isActive }) => 
-                    `block px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
-                      isActive 
-                        ? "gradient-primary text-white shadow-glow font-semibold" 
-                        : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
-                    }`
-                  }
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Predictor
-                </NavLink>
-              )}
-              <NavLink 
-                to="/about" 
-                className={({ isActive }) => 
-                  `block px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
-                    isActive 
-                      ? "gradient-primary text-white shadow-glow font-semibold" 
+        <div
+          className={`lg:hidden fixed top-16 sm:top-20 left-0 w-64 h-screen bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-r border-border/40 dark:border-gray-700/40 shadow-lg transform transition-transform duration-300 ease-in-out ${
+            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <nav className="py-4 space-y-2">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 hover:scale-105 ${
+                  isActive
+                    ? "gradient-primary text-white shadow-glow font-semibold"
+                    : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
+                }`
+              }
+              onClick={() => setIsMobileMenuOpen(false)}
+              end
+            >
+              Home
+            </NavLink>
+            {user && (
+              <NavLink
+                to={`/${user.id}/profile`}
+                className={({ isActive }) =>
+                  `block px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 hover:scale-105 ${
+                    isActive
+                      ? "gradient-primary text-white shadow-glow font-semibold"
                       : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
                   }`
                 }
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                About
+                Profile
               </NavLink>
-              
-              {/* Mobile Auth Buttons */}
-              <SignedOut>
-                <div className="px-4 py-3 space-y-2">
-                  <Link to="/sign-in" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button 
-                      variant="ghost" 
-                      className="w-full text-base font-medium hover:text-primary transition-all duration-300 bg-white/60 dark:bg-gray-800/60 hover:bg-white/80 dark:hover:bg-gray-700/80"
-                    >
-                      Sign In
-                    </Button>
-                  </Link>
-                  <Link to="/sign-up" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button 
-                      className="w-full gradient-primary text-white text-base font-medium hover:shadow-glow transition-all duration-300"
-                    >
-                      Get Started
-                    </Button>
-                  </Link>
-                </div>
-              </SignedOut>
-            </nav>
-          </div>
+            )}
+            {user && (
+              <NavLink
+                to={`/${user.id}/info`}
+                className={({ isActive }) =>
+                  `block px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 hover:scale-105 ${
+                    isActive
+                      ? "gradient-primary text-white shadow-glow font-semibold"
+                      : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
+                  }`
+                }
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Predictor
+              </NavLink>
+            )}
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 hover:scale-105 ${
+                  isActive
+                    ? "gradient-primary text-white shadow-glow font-semibold"
+                    : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-white/60 dark:hover:bg-gray-800/60"
+                }`
+              }
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </NavLink>
+
+            {/* Mobile Auth Buttons */}
+            <SignedOut>
+              <div className="px-4 py-3 space-y-2">
+                <Link to="/sign-in" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button
+                    variant="ghost"
+                    className="w-full text-base font-medium hover:text-primary transition-all duration-300 bg-white/60 dark:bg-gray-800/60 hover:bg-white/80 dark:hover:bg-gray-700/80"
+                  >
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/sign-up" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button className="w-full gradient-primary text-white text-base font-medium hover:shadow-glow transition-all duration-300">
+                    Get Started
+                  </Button>
+                </Link>
+              </div>
+            </SignedOut>
+            <SignedIn>
+              <div className="px-4 py-3">
+              </div>
+            </SignedIn>
+          </nav>
+        </div>
       </div>
     </header>
   );

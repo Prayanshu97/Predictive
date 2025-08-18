@@ -86,12 +86,12 @@ const Result = () => {
         </div>
         <div className="space-y-4">
           {Array.isArray(items) ? items.map((item, idx) => (
-            <div key={idx} className="flex items-start space-x-3 p-4 bg-muted/30 dark:bg-gray-700/30 rounded-xl border border-border/20 dark:border-gray-600/20">
+            <div key={idx} className="flex items-start space-x-3 p-4 bg-muted/30 dark:bg-gray-700/30 rounded-xl border border-border/100 dark:border-gray-600/20">
               <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
               <p className="text-foreground leading-relaxed">{item}</p>
             </div>
           )) : (
-            <div className="p-4 bg-muted/30 dark:bg-gray-700/30 rounded-xl border border-border/20 dark:border-gray-600/20">
+            <div className="p-4 bg-muted/30 dark:bg-gray-700/30 rounded-xl border border-border/100 dark:border-gray-600/20">
               <p className="text-foreground leading-relaxed">{items}</p>
             </div>
           )}
@@ -119,7 +119,7 @@ const Result = () => {
             Your personalized health assessment and recommendations
           </p>
           <div className="mt-4 text-sm text-muted-foreground">
-            Report ID: {reportId} • Generated on {new Date(report.createdAt).toLocaleDateString()}
+            Generated on {new Date(report.createdAt).toLocaleDateString()}
           </div>
         </div>
 
@@ -137,13 +137,18 @@ const Result = () => {
               </div>
               <div className="space-y-4">
                 {Array.isArray(gemini.predictedDisease) ? gemini.predictedDisease.map((disease, idx) => (
-                  <div key={idx} className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-xl border border-primary/20 dark:border-primary/30">
-                    <p className="text-foreground font-medium leading-relaxed">{typeof disease === 'string' ? disease : disease.name || disease}</p>
-                  </div>
+                  <div key={idx} className="flex items-start space-x-3 p-4 bg-muted/30 dark:bg-gray-700/30 rounded-xl border border-border/100 dark:border-gray-600/20">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-foreground leading-relaxed">{typeof disease === 'string' ? disease : disease.name || disease}</p>
+                </div>
                 )) : (
-                  <div className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-xl border border-primary/20 dark:border-primary/30">
-                    <p className="text-foreground font-medium leading-relaxed">{gemini.predictedDisease}</p>
-                  </div>
+                  <div className="flex items-start space-x-3 p-4 bg-muted/30 dark:bg-gray-700/30 rounded-xl border border-border/100 dark:border-gray-600/20">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-foreground leading-relaxed">{gemini.predictedDisease}</p>
+                </div>
+                  // <div className="p-4 from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-xl border border-primary/20 dark:border-primary/30">
+                  //   <p className="text-foreground font-medium leading-relaxed">{gemini.predictedDisease}</p>
+                  // </div>
                 )}
               </div>
             </section>
