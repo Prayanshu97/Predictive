@@ -26,7 +26,7 @@ function Footer() {
           {/* Disclaimer */}
           <div className="text-center sm:col-span-2 lg:col-span-1">
             <p className="text-xs text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Disclaimer:</strong> This information is AI-generated and for informational purposes only. 
+              <strong className="text-foreground">Disclaimer:</strong> This content is AI-generated and for informational purposes only. 
               Consult a healthcare professional before taking any medication or making medical decisions.
             </p>
           </div>
@@ -36,15 +36,32 @@ function Footer() {
             <p className="text-xs sm:text-sm text-muted-foreground">
               © 2025 Predictive. All rights reserved.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center sm:justify-end space-y-2 sm:space-y-0 sm:space-x-4 mt-2">
-              <a href="#" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-colors">
-                Terms of Service
-              </a>
-            </div>
+            
+            {/* <div className=''> */}
+              <p className="text-xs sm:text-sm text-muted-foreground mt-3 sm:mt-2 pt-6">
+                Developed By:
+              </p>
+              
+              <div className="flex flex-col sm:flex-row justify-center sm:justify-end space-y-1 sm:space-y-0 sm:space-x-4 mt-2">
+                <a
+                  href="https://portfolio-xhbc.onrender.com/"
+                  className="text-xs sm:text-sm text-primary hover:scale-120 transition-transform duration-200"
+
+                >
+                  Prayanshu
+                </a>
+                <span className="text-xs sm:text-sm text-muted-foreground">&</span>
+                <a
+                  href="https://portfolio-umber-theta-99.vercel.app/"
+                  className="text-xs sm:text-sm text-primary hover:scale-120 transition-transform duration-200"
+
+                >
+                  Manvendra
+                </a>
+              </div>
+            {/* </div> */}
           </div>
+
         </div>
       </div>
     </footer>

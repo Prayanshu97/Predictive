@@ -6,6 +6,7 @@ import { AI_PROMPT } from "@/constants/prompt";
 import { db } from "@/services/firebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
+import { Button } from "@/components/ui/button";
 
 const Details = () => {
   const { userId } = useParams();
@@ -97,7 +98,7 @@ const Details = () => {
           name="primarySymptoms"
           value={form.primarySymptoms}
           onChange={handleChange}
-          placeholder="e.g. Fever, Cough, Headache"
+          placeholder="e.g. Fever, Cough, None"
           required
         />
       </section>
@@ -109,7 +110,7 @@ const Details = () => {
           name="secondarySymptoms"
           value={form.secondarySymptoms}
           onChange={handleChange}
-          placeholder="e.g. Fatigue, Sore Throat, Body Ache OR None"
+          placeholder="e.g. Fatigue, Body Ache, None"
           required
         />
       </section>
@@ -142,13 +143,13 @@ const Details = () => {
           required
         />
       </section>
-      <button
+      <Button
         type="submit"
-        className="ml-45 mt-6 px-6 py-2 gradient-primary text-white rounded-xl hover:shadow-glow transition-all duration-300 font-semibold cursor-pointer"
+        className="w-full my-6 px-6 py-2 gradient-primary text-white rounded-xl hover:shadow-glow transition-all duration-300 font-semibold cursor-pointer"
         disabled={loading}
       >
         {loading ? "Generating Report..." : "Generate Diagnosis Report"}
-      </button>
+      </Button>
     </form>
   );
 };

@@ -68,7 +68,7 @@ const Home = () => {
     {
       icon: <PanToolIcon className="text-4xl text-primary" />,
       title: "Prevention",
-      description: "Advanced AI-powered disease prevention strategies"
+      description: "Advanced AI-powered prevention strategies"
     },
     {
       icon: <VaccinesIcon className="text-4xl text-secondary" />,
@@ -105,7 +105,7 @@ const Home = () => {
                 </h1>
                 <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0">
                   Revolutionizing healthcare with comprehensive, rapid AI diagnostic capabilities. 
-                  Get accurate multi-disease detection, prevention strategies, and mental health support.
+                  Get accurate multi-disease detection, prevention strategies, and personalized health support.
                 </p>
               </div>
               
@@ -143,7 +143,7 @@ const Home = () => {
                   <div className="text-xs sm:text-sm text-muted-foreground">Accuracy</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-xl sm:text-2xl font-bold text-secondary">24/7</div>
+                  <div className="text-xl sm:text-2xl font-bold text-secondary">24*7</div>
                   <div className="text-xs sm:text-sm text-muted-foreground">Support</div>
                 </div>
                 <div className="text-center">
@@ -210,15 +210,10 @@ const Home = () => {
             </h2>
             <div className="prose prose-sm sm:prose-base lg:prose-lg mx-auto text-muted-foreground leading-relaxed dark:prose-invert">
               <p>
-                Our cutting-edge AI technology combines advanced machine learning algorithms with comprehensive medical databases 
-                to provide you with accurate, personalized health insights. Whether you're looking to prevent illness, 
-                understand symptoms, or optimize your wellness routine, our platform offers the tools and guidance you need 
-                to take control of your health journey.
+                Our platform is designed to help you gain clear and personalized insights about your health. Whether you want to stay proactive, understand common symptoms, or improve your daily wellness routine, we provide easy-to-use tools and reliable guidance to support your health journey.
               </p>
               <p>
-                With 24/7 availability, instant analysis, and continuous learning capabilities, Predictive ensures you always 
-                have access to the most up-to-date health information and recommendations. Our commitment to privacy and 
-                security means your health data remains confidential while you receive the personalized care you deserve.
+                With 24*7 availability and instant analysis, Predictive ensures you always have access to helpful health information and recommendations. Your privacy and security are our top priorities, so your health data remains protected while you receive the care and support you need.
               </p>
             </div>
           </div>

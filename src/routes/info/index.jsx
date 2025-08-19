@@ -120,7 +120,7 @@ const Info = () => {
           <div className="space-y-6">
             <div className="text-center">
               <h2 className="text-3xl font-bold text-foreground mb-2">Previous Reports</h2>
-              <p className="text-muted-foreground">Review your past health assessments and track your progress</p>
+              <p className="text-muted-foreground">Review your past health assessments</p>
             </div>
             
             {loadingReports ? (

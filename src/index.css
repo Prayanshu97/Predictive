@@ -123,6 +123,39 @@
   }
 }
 
+/* Target the Clerk button directly */
+button.cl-userButtonTrigger.cl-button,
+.cl-userButtonTrigger.cl-button {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: unset !important;
+  min-height: unset !important;
+  padding: 0 !important;
+  border-radius: 9999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+/* Focus style */
+button.cl-userButtonTrigger.cl-button:focus-visible,
+.cl-userButtonTrigger.cl-button:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 4px rgba(59,130,246,0.35) !important;
+  border-radius: 9999px !important;
+}
+
+/* mobile tweak (optional) */
+@media (max-width: 640px) {
+  button.cl-userButtonTrigger.cl-button,
+  .cl-userButtonTrigger.cl-button {
+    width: 28px !important;
+    height: 28px !important;
+  }
+}
+
+
 /* Modern scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -182,7 +215,7 @@
 
 /* Select element styling */
 select {
-  background-color: transparent !important;
+  background-color: transparent;
   color: inherit;
   border: 2px solid var(--border);
   border-radius: 0.75rem;
@@ -196,7 +229,7 @@ select {
   background-position: right 0.5rem center;
   background-repeat: no-repeat;
   background-size: 1.5em 1.5em;
-  padding-right: 2.5rem; 
+  padding-right: 2.5rem;
 }
 
 select:hover {
@@ -231,25 +264,15 @@ select:disabled {
   box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px rgba(255, 107, 107, 0.1);
 }
 
-.dark select option:nth-child(1),
-.dark select option:nth-child(2),
-.dark select option:nth-child(3),
-.dark select option:nth-child(4),
-.dark select option:nth-child(5) {
-  background-color: #0f172ae7;
-  color:#FF6B6B;
-  border-color: #FF6B6B !important;
+.dark select option {
+  background-color: #374151;
+  color: #f3f4f6;
 }
 
 /* Light mode select option styling */
-select option:nth-child(1),
-select option:nth-child(2),
-select option:nth-child(3),
-select option:nth-child(4),
-select option:nth-child(5) {
-  background-color: #ffffffd8;
-  color:#FF6B6B;
-  border-color: #FF6B6B !important;
+select option {
+  background-color: #ffffff;
+  color: #1f2937;
 }
 
 /* Enhanced input field styling */
