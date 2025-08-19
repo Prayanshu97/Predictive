@@ -45,76 +45,37 @@ function Header() {
           {/* Mobile Menu Button - Left Side */}
           <button
             onClick={toggleMobileMenu}
-            className="lg:hidden min-w-[40px] min-h-[40px] rounded-xl bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-700 hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 shadow-modern flex items-center justify-center border border-gray-200/50 dark:border-gray-600/50 hover:border-primary/30 dark:hover:border-primary/50 overflow-visible"
+            className="lg:hidden min-w-[40px] min-h-[40px] rounded-xl bg-white/90 dark:bg-gray-800/90 
+                      hover:bg-white dark:hover:bg-gray-700 hover:shadow-lg hover:scale-105 active:scale-95 
+                      transition-all duration-300 shadow-modern flex items-center justify-center 
+                      border border-gray-200/50 dark:border-gray-600/50 hover:border-primary/30 dark:hover:border-primary/50"
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileMenuOpen}
-          >
-            <div className="relative w-6 h-5 flex items-center justify-center overflow-visible">
-              <span
-                className={`absolute inset-0 transform transition-all duration-300 ease-in-out ${
-                  isMobileMenuOpen
-                    ? "rotate-45 translate-y-0"
-                    : "-translate-y-1"
-                }`}
-              >
-                  <svg
-                    className="w-5 h-5 text-gray-700 dark:text-gray-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M4 6h16"
-                  />
-                </svg>
-              </span>
-              <span
-                className={`absolute inset-0 transform transition-all duration-300 ease-in-out ${
-                  isMobileMenuOpen
-                    ? "opacity-0 scale-0"
-                    : "opacity-100 scale-100"
-                }`}
-              >
-                  <svg
-                    className="w-5 h-5 text-gray-700 dark:text-gray-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M4 12h16"
-                  />
-                </svg>
-              </span>
-              <span
-                className={`absolute inset-0 transform transition-all duration-300 ease-in-out ${
-                  isMobileMenuOpen
-                    ? "-rotate-45 translate-y-0"
-                    : "translate-y-1"
-                }`}
-              >
-                  <svg
-                    className="w-5 h-5 text-gray-700 dark:text-gray-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M4 18h16"
-                  />
-                </svg>
-              </span>
+        >
+            <div className="relative w-6 h-5 flex flex-col justify-between">
+                {/* Top bar */}
+                <span
+                    className={`block h-0.5 w-6 bg-gray-700 dark:bg-gray-300 rounded transition-transform duration-500 ease-in-out ${
+                        isMobileMenuOpen ? "rotate-45 translate-y-[9px]" : ""
+                    }`}
+                ></span>
+
+                {/* Middle bar */}
+                <span
+                    className={`block h-0.5 w-6 bg-gray-700 dark:bg-gray-300 rounded transition-all duration-500 ease-in-out ${
+                        isMobileMenuOpen ? "opacity-0 scale-50" : ""
+                    }`}
+                ></span>
+
+                {/* Bottom bar */}
+                <span
+                    className={`block h-0.5 w-6 bg-gray-700 dark:bg-gray-300 rounded transition-transform duration-500 ease-in-out ${
+                        isMobileMenuOpen ? "-rotate-45 -translate-y-[9px]" : ""
+                    }`}
+                ></span>
             </div>
-          </button>
+        </button>
+
 
           {/* Logo - Center */}
           <Link
@@ -236,14 +197,7 @@ function Header() {
 
             {/* User Button - Only when signed in */}
             <SignedIn>
-              <UserButton
-                appearance={{
-                  elements: {
-                    avatarBox:
-                      "w-8 h-8 sm:w-10 sm:h-10 rounded-xl shadow-modern",
-                  },
-                }}
-              />
+              <UserButton />
             </SignedIn>
           </div>
         </div>
@@ -315,7 +269,7 @@ function Header() {
 
             {/* Mobile Auth Buttons */}
             <SignedOut>
-              <div className="px-4 py-3 space-y-2">
+              <div className="px-4 py-3">
                 <Link to="/sign-in" onClick={() => setIsMobileMenuOpen(false)}>
                   <Button
                     variant="ghost"
@@ -325,7 +279,7 @@ function Header() {
                   </Button>
                 </Link>
                 <Link to="/sign-up" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button className="w-full gradient-primary text-white text-base font-medium hover:shadow-glow transition-all duration-300">
+                  <Button className="mt-3 w-full gradient-primary text-white text-base font-medium hover:shadow-glow transition-all duration-300">
                     Get Started
                   </Button>
                 </Link>
