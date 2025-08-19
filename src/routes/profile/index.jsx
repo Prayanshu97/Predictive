@@ -142,7 +142,7 @@ function Profile() {
                   </svg>
                 </div>
                 <span className="text-foreground font-medium">
-                  Your profile is up to date.
+                  Profile complete
                 </span>
               </div>
               <Button
@@ -256,7 +256,7 @@ function Profile() {
                     name="medicalConditions"
                     value={form.medicalConditions}
                     onChange={handleChange}
-                    placeholder="e.g. Diabetes, Hypertension, Heart Disease, Asthma OR None"
+                    placeholder="e.g. Diabetes, Asthma, None"
                     disabled={profileExists && !editing}
                     required
                   />
@@ -270,7 +270,7 @@ function Profile() {
                     name="chronicIllnesses"
                     value={form.chronicIllnesses}
                     onChange={handleChange}
-                    placeholder="e.g. Kidney Disease, Arthritis, Thyroid Disorders OR None"
+                    placeholder="e.g. Arthritis, Thyroid, None"
                     disabled={profileExists && !editing}
                     required
                   />
@@ -284,7 +284,7 @@ function Profile() {
                     name="allergies"
                     value={form.allergies}
                     onChange={handleChange}
-                    placeholder="e.g. Food, Medication, Environmental OR None"
+                    placeholder="e.g. Food, Medication, None"
                     disabled={profileExists && !editing}
                     required
                   />
@@ -298,7 +298,7 @@ function Profile() {
                     name="familyHistory"
                     value={form.familyHistory}
                     onChange={handleChange}
-                    placeholder="e.g. Cancer, Heart Disease, Diabetes OR None"
+                    placeholder="e.g. Baldness, Diabetes, None"
                     disabled={profileExists && !editing}
                     required
                   />
@@ -312,7 +312,7 @@ function Profile() {
                     name="medications"
                     value={form.medications}
                     onChange={handleChange}
-                    placeholder="e.g. Prescription drugs, supplements, treatments OR None"
+                    placeholder="e.g. Supplements, None"
                     disabled={profileExists && !editing}
                     required
                   />
@@ -353,7 +353,6 @@ function Profile() {
                     disabled={profileExists && !editing}
                     required
                   >
-                    <option value="">Select Activity Level</option>
                     <option value="Sedentary">Sedentary</option>
                     <option value="Lightly Active">Lightly Active</option>
                     <option value="Moderately Active">Moderately Active</option>
@@ -372,7 +371,6 @@ function Profile() {
                     disabled={profileExists && !editing}
                     required
                   >
-                    <option value="">Select Dietary Preference</option>
                     <option value="Vegan">Vegan</option>
                     <option value="Vegetarian">Vegetarian</option>
                     <option value="Non-Vegetarian">Non-Vegetarian</option>

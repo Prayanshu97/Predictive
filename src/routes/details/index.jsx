@@ -98,7 +98,7 @@ const Details = () => {
           name="primarySymptoms"
           value={form.primarySymptoms}
           onChange={handleChange}
-          placeholder="e.g. Fever, Cough, Headache"
+          placeholder="e.g. Fever, Cough, None"
           required
         />
       </section>
@@ -110,7 +110,7 @@ const Details = () => {
           name="secondarySymptoms"
           value={form.secondarySymptoms}
           onChange={handleChange}
-          placeholder="e.g. Fatigue, Sore Throat, Body Ache OR None"
+          placeholder="e.g. Fatigue, Body Ache, None"
           required
         />
       </section>
