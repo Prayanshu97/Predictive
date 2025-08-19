@@ -142,7 +142,7 @@ function Profile() {
                   </svg>
                 </div>
                 <span className="text-foreground font-medium">
-                  Profile complete
+                  Profile Complete
                 </span>
               </div>
               <Button

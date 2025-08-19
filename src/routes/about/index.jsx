@@ -13,7 +13,7 @@ const About = () => {
     {
       icon: <ScienceIcon className="text-4xl text-primary" />,
       title: "Advanced AI Technology",
-      description: "Powered by cutting-edge machine learning algorithms trained on extensive medical databases"
+      description: "Powered by cutting-edge AI for accurate diagnostics"
     },
     {
       icon: <SpeedIcon className="text-4xl text-secondary" />,
@@ -23,12 +23,12 @@ const About = () => {
     {
       icon: <SecurityIcon className="text-4xl text-primary" />,
       title: "Privacy First",
-      description: "Your health data is encrypted and secure with enterprise-grade security measures"
+      description: "Your health data is encrypted and secure in our database"
     },
     {
       icon: <PsychologyIcon className="text-4xl text-secondary" />,
-      title: "Mental Health Support",
-      description: "Comprehensive mental health assessment and personalized wellness recommendations"
+      title: "Personalized Health Support",
+      description: "Comprehensive health assessment and personalized wellness recommendations"
     }
   ];
 
@@ -70,9 +70,7 @@ const About = () => {
                 comprehensive, and personalized health insights to individuals worldwide.
               </p>
               <p>
-                We combine the expertise of medical professionals with the power of machine learning to create 
-                a platform that not only identifies potential health issues but also provides actionable 
-                recommendations for prevention and wellness optimization.
+                We bring carefully designed tool to create a platform that helps identify potential health concerns while offering practical recommendations for prevention and overall wellness improvement.
               </p>
             </div>
           </div>
@@ -87,7 +85,7 @@ const About = () => {
               Our Technology
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto">
-              Built on the latest advancements in artificial intelligence and medical research
+              Built on the latest advancements in artificial intelligence
             </p>
           </div>
 
@@ -141,37 +139,7 @@ const About = () => {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/10 to-secondary/10 dark:from-primary/5 dark:to-secondary/5">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-              Ready to Experience the Future of Healthcare?
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Join thousands of users who trust Predictive for their health diagnostics
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/">
-                <Button 
-                  className="gradient-primary text-white text-lg px-8 py-4 rounded-xl hover:shadow-glow transition-all duration-300 font-semibold"
-                >
-                  Get Started
-                </Button>
-              </Link>
-              {/* <Link to="/">
-                <Button 
-                  variant="outline" 
-                  className="text-lg px-8 py-4 rounded-xl border-2 border-primary/20 hover:border-primary hover:bg-primary/5 transition-all duration-300 font-semibold dark:border-primary/30 dark:hover:bg-primary/10"
-                >
-                  Learn More
-                </Button>
-              </Link> */}
-            </div>
-          </div>
-        </div>
-      </section>
+      
     </div>
   );
 };
