@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/clerk-react";
-import { doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "@/services/firebaseConfig";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -78,19 +78,21 @@ function Profile() {
     }
   };
 
-  const handleUpdate = async () => {
-    setLoading(true);
-    try {
-      const uid = userId || user?.id;
-      await deleteDoc(doc(db, "users", uid));
-      setEditing(true);
-      setProfileExists(false);
-    } catch (err) {
-      alert("Error updating profile: " + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+
+  // remove krna h
+  // const handleUpdate = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const uid = userId || user?.id;
+  //     await deleteDoc(doc(db, "users", uid));
+  //     setEditing(true);
+  //     setProfileExists(false);
+  //   } catch (err) {
+  //     alert("Error updating profile: " + err.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   if (checkingProfile) {
     return (

@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from '@/services/firebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
-import jsPDF from 'jspdf';
 import { Button } from '@/components/ui/button';
+import { generateDownloadPdf } from "@/lib/pdfGenerator"; 
 
 const Result = () => {
   const { userId, reportId } = useParams();
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     const fetchReport = async () => {
@@ -27,6 +28,28 @@ const Result = () => {
     };
     fetchReport();
   }, [reportId]);
+
+  const handleDownloadClick = async () => {
+    if (!report || !userId) {
+      console.error("Report or user data is not available.");
+      return;
+    }
+    setIsDownloading(true);
+    try {
+      // Fetch the user's profile data
+      const userDoc = await getDoc(doc(db, 'users', userId));
+      const userProfile = userDoc.exists() ? userDoc.data() : {};
+      
+      // 3. CALL the imported function with the necessary data
+      generateDownloadPdf(report, userProfile);
+
+    } catch (e) {
+      console.error('Error preparing for PDF download', e);
+      alert('Failed to prepare data for PDF. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -74,136 +97,6 @@ const Result = () => {
   }
 
   const gemini = report.geminiResponse;
-
-  const handleDownloadPdf = async () => {
-    try {
-      const userDoc = await getDoc(doc(db, 'users', userId));
-      const userProfile = userDoc.exists() ? userDoc.data() : {};
-
-      const docPdf = new jsPDF({ unit: 'pt', format: 'a4' });
-      const pageWidth = docPdf.internal.pageSize.getWidth();
-      const pageHeight = docPdf.internal.pageSize.getHeight();
-      const margin = 48;
-      let cursorY = margin;
-
-      const addHeading = (text) => {
-        docPdf.setFont('helvetica', 'bold');
-        docPdf.setFontSize(18);
-        docPdf.text(text, margin, cursorY);
-        cursorY += 20;
-      };
-
-      const addSubheading = (text) => {
-        docPdf.setFont('helvetica', 'bold');
-        docPdf.setFontSize(14);
-        docPdf.text(text, margin, cursorY);
-        cursorY += 16;
-      };
-
-      const addParagraph = (text) => {
-        docPdf.setFont('helvetica', 'normal');
-        docPdf.setFontSize(12);
-        const maxWidth = pageWidth - margin * 2;
-        const lines = docPdf.splitTextToSize(String(text ?? ''), maxWidth);
-        lines.forEach((line) => {
-          if (cursorY > pageHeight - margin) {
-            docPdf.addPage();
-            cursorY = margin;
-          }
-          docPdf.text(line, margin, cursorY);
-          cursorY += 16;
-        });
-      };
-
-      const addKeyValue = (label, value) => {
-        if (value === undefined || value === null || value === '') return;
-        docPdf.setFont('helvetica', 'bold');
-        docPdf.setFontSize(12);
-        const labelText = `${label}: `;
-        const labelWidth = docPdf.getTextWidth(labelText);
-        if (cursorY > pageHeight - margin) { docPdf.addPage(); cursorY = margin; }
-        docPdf.text(labelText, margin, cursorY);
-        docPdf.setFont('helvetica', 'normal');
-        const maxWidth = pageWidth - margin * 2 - labelWidth;
-        const lines = docPdf.splitTextToSize(String(value), maxWidth);
-        docPdf.text(lines, margin + labelWidth, cursorY);
-        cursorY += Math.max(16, lines.length * 14);
-      };
-
-      const addBullets = (items) => {
-        if (!items) return;
-        const array = Array.isArray(items) ? items : [items];
-        docPdf.setFont('helvetica', 'normal');
-        docPdf.setFontSize(12);
-        const maxWidth = pageWidth - margin * 2 - 14;
-        array.forEach((item) => {
-          const lines = docPdf.splitTextToSize(String(item ?? ''), maxWidth);
-          if (cursorY > pageHeight - margin) { docPdf.addPage(); cursorY = margin; }
-          docPdf.text('•', margin, cursorY);
-          docPdf.text(lines, margin + 14, cursorY);
-          cursorY += Math.max(16, lines.length * 14);
-        });
-      };
-
-      // 1. User profile details
-      addHeading('User Profile');
-      addKeyValue('Full Name', userProfile.name || 'N/A');
-      addKeyValue('Age', userProfile.age != null ? `${userProfile.age}` : 'N/A');
-      addKeyValue('Gender', userProfile.gender || 'N/A');
-      addKeyValue('Medical Conditions', userProfile.medicalConditions || 'N/A');
-      addKeyValue('Chronic Illnesses', userProfile.chronicIllnesses || 'N/A');
-      addKeyValue('Allergies', userProfile.allergies || 'N/A');
-      addKeyValue('Family History', userProfile.familyHistory || 'N/A');
-      addKeyValue('Medications', userProfile.medications || 'N/A');
-      addKeyValue('Activity Level', userProfile.activityLevel || 'N/A');
-      addKeyValue('Dietary Preferences', userProfile.dietaryPreferences || 'N/A');
-      cursorY += 10;
-
-      // 2. Suitable heading for current diagnostic and date
-      addHeading('Current Diagnostic');
-      addParagraph(`Generated on ${new Date(report.createdAt).toLocaleDateString()}`);
-      cursorY += 4;
-
-      // 3. Summary of the report
-      addSubheading('Summary');
-      addParagraph(gemini.summaryReport || 'No summary available.');
-      cursorY += 8;
-
-      // 4. Contents of the result page
-      addHeading('Detailed Recommendations');
-
-      // Predicted Diseases
-      if (gemini.predictedDisease) {
-        addSubheading('Diagnosis Results');
-        const list = Array.isArray(gemini.predictedDisease) ? gemini.predictedDisease.map((d) => (typeof d === 'string' ? d : d?.name || d)) : [gemini.predictedDisease];
-        addBullets(list);
-        cursorY += 4;
-      }
-
-      const sectionDefs = [
-        { title: 'Personalized Guidance', items: gemini.personalizedGuidance },
-        { title: 'Prevention Strategies', items: gemini.preventionStrategies },
-        { title: 'Recommended Exercise', items: gemini.recommendedExercise },
-        { title: 'Nutrition Guidance', items: gemini.nutritionGuidance },
-        { title: 'Precautionary Measures', items: gemini.precautionaryMeasures },
-        { title: 'Home Remedies', items: gemini.homeRemedies },
-      ];
-
-      sectionDefs.forEach((sec) => {
-        if (sec.items && (Array.isArray(sec.items) ? sec.items.length > 0 : true)) {
-          addSubheading(sec.title);
-          addBullets(sec.items);
-          cursorY += 6;
-        }
-      });
-
-      const filename = `Health_Report_${new Date(report.createdAt).toISOString().slice(0,10)}.pdf`;
-      docPdf.save(filename);
-    } catch (e) {
-      console.error('Error generating PDF', e);
-      alert('Failed to generate PDF. Please try again.');
-    }
-  };
 
   const renderSection = (title, items, icon, color = "primary") => {
     if (!items || items.length === 0) return null;
@@ -347,7 +240,7 @@ const Result = () => {
           )}
 
           <div className="pt-2 pb-6 flex justify-center">
-            <Button onClick={handleDownloadPdf} className="gradient-primary text-white text-base px-6 py-3 rounded-xl hover:shadow-glow transition-all duration-300">
+            <Button onClick={handleDownloadClick} disabled={isDownloading} className="gradient-primary text-white text-base px-6 py-3 rounded-xl hover:shadow-glow transition-all duration-300">
               Download PDF
             </Button>
           </div>
