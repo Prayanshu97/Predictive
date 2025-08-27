@@ -52,7 +52,7 @@ function Footer() {
                 </a>
                 <span className="text-xs sm:text-sm text-muted-foreground">&</span>
                 <a
-                  href="https://portfolio-umber-theta-99.vercel.app/"
+                  href="https://portfolio-nine-mu-z4qejubsp7.vercel.app/"
                   className="text-xs sm:text-sm text-primary hover:scale-120 transition-transform duration-200"
 
                 >
