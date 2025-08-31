@@ -52,7 +52,7 @@ function Profile() {
       }
     };
     if (userId || user?.id) checkProfile();
-    // eslint-disable-next-line
+    
   }, [userId, user]);
 
   const handleChange = (e) => {
@@ -77,22 +77,6 @@ function Profile() {
       setLoading(false);
     }
   };
-
-
-  // remove krna h
-  // const handleUpdate = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const uid = userId || user?.id;
-  //     await deleteDoc(doc(db, "users", uid));
-  //     setEditing(true);
-  //     setProfileExists(false);
-  //   } catch (err) {
-  //     alert("Error updating profile: " + err.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   if (checkingProfile) {
     return (

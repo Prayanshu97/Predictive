@@ -37,7 +37,7 @@ function Footer() {
               © 2025 Predictive. All rights reserved.
             </p>
             
-            {/* <div className=''> */}
+            
               <p className="text-xs sm:text-sm text-muted-foreground mt-3 sm:mt-2 pt-6">
                 Developed By:
               </p>
@@ -59,7 +59,7 @@ function Footer() {
                   Manvendra
                 </a>
               </div>
-            {/* </div> */}
+            
           </div>
 
         </div>

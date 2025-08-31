@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { db } from '@/services/firebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
-import { generateDownloadPdf } from "@/lib/pdfGenerator"; 
+import { generateDownloadPdf } from "@/lib/pdfGenerator";
 
 const Result = () => {
   const { userId, reportId } = useParams();
@@ -36,11 +36,9 @@ const Result = () => {
     }
     setIsDownloading(true);
     try {
-      // Fetch the user's profile data
       const userDoc = await getDoc(doc(db, 'users', userId));
       const userProfile = userDoc.exists() ? userDoc.data() : {};
-      
-      // 3. CALL the imported function with the necessary data
+
       generateDownloadPdf(report, userProfile);
 
     } catch (e) {
@@ -100,7 +98,7 @@ const Result = () => {
 
   const renderSection = (title, items, icon, color = "primary") => {
     if (!items || items.length === 0) return null;
-    
+
     return (
       <section className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-modern border border-white/20 dark:border-gray-700/20 p-8 animate-fade-in-up">
         <div className="flex items-center space-x-3 mb-6">
@@ -149,34 +147,14 @@ const Result = () => {
         </div>
 
         <div className="space-y-8">
-          {/* Predicted Diseases - Now as normal text */}
-          {gemini.predictedDisease && (
-            <section className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-modern border border-white/20 dark:border-gray-700/20 p-8 animate-slide-in-left">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 gradient-primary rounded-2xl flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <use href="/icons/sprite.svg#bar-chart" />
-                  </svg>
-                </div>
-                <h2 className="text-2xl font-bold text-foreground">Diagnosis Results</h2>
-              </div>
-              <div className="space-y-4">
-                {Array.isArray(gemini.predictedDisease) ? gemini.predictedDisease.map((disease, idx) => (
-                  <div key={idx} className="flex items-start space-x-3 p-4 bg-muted/30 dark:bg-gray-700/30 rounded-xl border border-border/100 dark:border-gray-600/20">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-foreground leading-relaxed">{typeof disease === 'string' ? disease : disease.name || disease}</p>
-                </div>
-                )) : (
-                  <div className="flex items-start space-x-3 p-4 bg-muted/30 dark:bg-gray-700/30 rounded-xl border border-border/100 dark:border-gray-600/20">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-foreground leading-relaxed">{gemini.predictedDisease}</p>
-                </div>
-                  // <div className="p-4 from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-xl border border-primary/20 dark:border-primary/30">
-                  //   <p className="text-foreground font-medium leading-relaxed">{gemini.predictedDisease}</p>
-                  // </div>
-                )}
-              </div>
-            </section>
+          {/* Diagnosis Results */}
+          {renderSection(
+            "Diagnosis Results",
+            gemini.predictedDisease,
+            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <use href="/icons/sprite.svg#lightbulb-sparkles" />
+            </svg>,
+            "primary"
           )}
 
           {/* Personalized Guidance */}
