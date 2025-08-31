@@ -152,7 +152,7 @@ const Result = () => {
             "Diagnosis Results",
             gemini.predictedDisease,
             <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <use href="/icons/sprite.svg#lightbulb-sparkles" />
+              <use href="/icons/sprite.svg#bar-chart" />
             </svg>,
             "primary"
           )}
