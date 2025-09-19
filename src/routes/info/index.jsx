@@ -155,7 +155,7 @@ const Info = () => {
                             <use href="/icons/sprite.svg#document-text" />
                           </svg>
                         </div>
-                        <div>
+{/*                         <div>
                           <div className="font-semibold text-foreground">
                             {new Date(report.createdAt).toLocaleDateString('en-US', {
                               year: 'numeric',
@@ -169,6 +169,38 @@ const Info = () => {
                               minute: '2-digit'
                             })}
                           </div>
+                        </div> */}
+                        <div>
+                          <div className="font-semibold text-foreground">
+                            {report.createdAt
+                              ? (report.createdAt.toDate
+                                  ? report.createdAt.toDate().toLocaleDateString('en-US', {
+                                      year: 'numeric',
+                                      month: 'long',
+                                      day: 'numeric'
+                                    })
+                                  : new Date(report.createdAt).toLocaleDateString('en-US', {
+                                      year: 'numeric',
+                                      month: 'long',
+                                      day: 'numeric'
+                                    }))
+                              : '...'}
+                          </div>
+
+                          <div className="text-sm text-muted-foreground">
+                            {report.createdAt
+                              ? (report.createdAt.toDate
+                                  ? report.createdAt.toDate().toLocaleTimeString('en-US', {
+                                      hour: '2-digit',
+                                      minute: '2-digit'
+                                    })
+                                  : new Date(report.createdAt).toLocaleTimeString('en-US', {
+                                      hour: '2-digit',
+                                      minute: '2-digit'
+                                    }))
+                              : '...'}
+                          </div>
+
                         </div>
                       </div>
                       <div className="text-primary group-hover:translate-x-1 transition-transform duration-300">
