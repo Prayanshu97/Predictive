@@ -142,7 +142,7 @@ const Result = () => {
             Your personalized health assessment and recommendations
           </p>
           <div className="mt-4 text-sm text-muted-foreground">
-            Generated on {new Date(report.createdAt).toLocaleDateString()}
+            Generated on {report.createdAt?.toDate().toLocaleDateString()}
           </div>
         </div>
 
