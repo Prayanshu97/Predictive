@@ -1,5 +1,9 @@
 # Predictive - AI Health App
 
+## Live Demo  
+[Predictive - AI Health App](https://predictive-lime.vercel.app/)
+
+
 ## Overview
 Predictive is an AI-powered health application designed to provide personalized diagnostics, health insights, and recommendations. Built with React, Vite, Firebase, and Google Gemini AI, it offers a seamless experience for users to manage their health, receive AI-driven reports, and access actionable guidance.
 
